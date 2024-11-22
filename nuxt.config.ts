@@ -26,4 +26,5 @@ export default defineNuxtConfig({
       ],
     },
   },
+  css: ["~/assets/global.css", "bootstrap-icons/font/bootstrap-icons.css"],
 });
