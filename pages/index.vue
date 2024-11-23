@@ -4,20 +4,33 @@
         .row
             .col-lg-6.my-auto
                 h1 Find a job that aligns with your interests and skills
-                p Thousands of jobs in all the leading sector are waiting for you.
-                .row.shadow.border.p-4.rounded-2.align-items-center
-                    .col-lg-4
-                        input.border-0.form-control(placeholder="ad")
-                    .col-lg-4
-                        input.border-0.form-control(placeholder="ad")
-                    .col-lg-4
-                        button.btn.btn-success submit
-            .col-lg-6.text-center
+                p.mb-5 Thousands of jobs in all the leading sector are waiting for you.
+                .row.shadow.border.p-4.rounded-2.align-items-center.m-1.m-md-0
+                    .col-lg-4.d-flex.align-items-center
+                        i(class="bi bi-search")
+                        input.border-0.form-control(placeholder="Search")
+                    .col-lg-4.mt-2.mt-lg-0.d-flex.align-items-center
+                        i(class="bi bi-geo-alt")
+                        input.border-0.form-control(placeholder="Locaton")
+                    .col-lg-4.text-end.mt-2.mt-lg-0
+                        button.btn.btn-success.w-100.h-100 Find Job
+                .row.mt-3
+                    p.text-muted Suggetions: UI/UX designer, front-end engineer, Digital marketing, Vedio, Animation etc..
+            .col-lg-6.text-center.d-none.d-md-block
                 img.img-fluid(src="../assets/image.png" style="max-width: 500px")
+        
+    .container.pt-5.mt-5
+        .row.text-center.align-items-center
+            h2 Featured Jobs
+            p.text-muted Choose jobs from the top employers and apply for the same.
 
 
 </template>
 
 <script setup></script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.form-control {
+    box-shadow: none;
+}
+</style>
