@@ -1,7 +1,7 @@
 <template lang="pug">
     nav.navbar.navbar-expand-lg.bg-body-tertiary
         .container.p-2
-            a.navbar-brand(href='#')
+            NuxtLink.navbar-brand(to="/")
                 i.me-2(class="bi bi-search-heart")
                 | AlwaysApply
             button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
@@ -21,6 +21,9 @@
                 form.d-flex.gap-2(role='search')
                     button.btn.btn-outline-success.py-2.px-4(type='submit') Sign up
                     button.btn.btn-success.py-2.px-4(type='submit') Login
+                    button.btn.d-block
+                        i(class="bi bi-globe me-2")
+                        span(class="font-size: 9px;") العربيه
 </template>
 
 <script setup></script>
