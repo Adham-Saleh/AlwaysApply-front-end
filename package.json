@@ -15,5 +15,9 @@
     "pug": "^3.0.3",
     "vue": "latest",
     "vue-router": "latest"
+  },
+  "devDependencies": {
+    "@element-plus/nuxt": "^1.1.0",
+    "element-plus": "^2.8.8"
   }
 }
