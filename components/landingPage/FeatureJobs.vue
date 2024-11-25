@@ -18,7 +18,7 @@
                     .row.mt-4
                         .logo-container.d-flex.gap-2.text-muted.align-items-center
                             .logo
-                                img(src=`../../assets/${idx}.png` style="max-width: 40px;")
+                                img(src=`../../assets/1.png` style="max-width: 40px;")
                             .logo-content
                                 span {{card.company}}
                                 .location.algin-items-center.gap-2
@@ -44,11 +44,11 @@
             .col.d-block.d-md-flex.justify-content-between.text-center.text-md-start.p-5
                 //- pre {{`../../public/hiringCompanies/${i}.png`}}
                 //- img(src=`../../public/hiringCompanies/${i}.png`)
-                img.img-fluid.me-3.me-md-0(src="../../public/hiringCompanies/1.png" style="max-width: 80px; object: contain;")
-                img.img-fluid.me-3.me-md-0(src="../../public/hiringCompanies/2.png" style="max-width: 80px; object: contain;")
-                img.img-fluid.me-3.me-md-0(src="../../public/hiringCompanies/3.png" style="max-width: 80px; object: contain;")
-                img.img-fluid.me-3.me-md-0(src="../../public/hiringCompanies/4.png" style="max-width: 80px; object: contain;")
-                img.img-fluid.me-3.me-md-0(src="../../public/hiringCompanies/5.png" style="max-width: 80px; object: contain;")
+                img.img-fluid.me-3.me-md-0(src="../../assets/hiringCompanies/1.png" style="max-width: 80px; object: contain;")
+                img.img-fluid.me-3.me-md-0(src="../../assets/hiringCompanies/2.png" style="max-width: 80px; object: contain;")
+                img.img-fluid.me-3.me-md-0(src="../../assets/hiringCompanies/3.png" style="max-width: 80px; object: contain;")
+                img.img-fluid.me-3.me-md-0(src="../../assets/hiringCompanies/4.png" style="max-width: 80px; object: contain;")
+                img.img-fluid.me-3.me-md-0(src="../../assets/hiringCompanies/5.png" style="max-width: 80px; object: contain;")
 
 </template>
 
