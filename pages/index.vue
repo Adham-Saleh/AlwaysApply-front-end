@@ -10,9 +10,9 @@
                         input.border-0.form-control(placeholder="Search")
                     .col-lg-4.mt-2.mt-lg-0.d-flex.align-items-center
                         i(class="bi bi-geo-alt")
-                        input.border-0.form-control(placeholder="Locaton")
+                        input.border-0.form-control(placeholder="Location")
                     .col-lg-4.text-end.mt-2.mt-lg-0
-                        button.btn.btn-success.w-100.h-100 Find Job
+                        button.btn.btn-success.w-100.h-100.py-3 Find Job
                 .row.mt-3
                     p.text-muted Suggetions: UI/UX designer, front-end engineer, Digital marketing, Vedio, Animation etc..
             .col-lg-6.text-center.d-none.d-md-block

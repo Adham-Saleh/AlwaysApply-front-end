@@ -19,8 +19,8 @@
                     li.nav-item
                         a.nav-link(href='#') About us
                 form.d-flex.gap-2(role='search')
-                    button.btn.btn-outline-success.py-2.px-4(type='submit') Sign up
-                    button.btn.btn-success.py-2.px-4(type='submit') Login
+                    NuxtLink.btn.btn-outline-success.py-2.px-4(to="/auth/register" type='submit') Sign up
+                    NuxtLink.btn.btn-success.py-2.px-4(to="/auth/login" type='submit') Login
                     button.btn.d-block
                         i(class="bi bi-globe me-2")
                         span(class="font-size: 9px;") العربيه
