@@ -2,10 +2,10 @@
 export default defineNuxtConfig({
   compatibilityDate: "2024-11-01",
   devtools: { enabled: true },
-  modules: [
-    '@element-plus/nuxt'
-  ],
-  elementPlus: { /** Options */ },
+  modules: ["@element-plus/nuxt", "@vee-validate/nuxt"],
+  elementPlus: {
+    /** Options */
+  },
   app: {
     head: {
       htmlAttrs: {

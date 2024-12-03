@@ -10,11 +10,13 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@vee-validate/nuxt": "^4.14.7",
     "bootstrap-icons": "^1.11.3",
     "nuxt": "^3.14.1592",
     "pug": "^3.0.3",
     "vue": "latest",
-    "vue-router": "latest"
+    "vue-router": "latest",
+    "yup": "^1.5.0"
   },
   "devDependencies": {
     "@element-plus/nuxt": "^1.1.0",
