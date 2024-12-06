@@ -9,15 +9,13 @@
             #navbarSupportedContent.collapse.navbar-collapse
                 ul.navbar-nav.me-auto.mb-2.mb-lg-0.ms-auto.gap-3(style="font-size: 14px")
                     li.nav-item
-                        a.nav-link.active(aria-current='page' href='#') Home
+                        NuxtLink.nav-link.active(aria-current='page' to="/") Home
                     li.nav-item
-                        a.nav-link(href='#') Find jobs
+                        NuxtLink.nav-link(to="/jobs/findjobs") Find jobs
                     li.nav-item
                         a.nav-link(href='#') Employers
                     li.nav-item
-                        a.nav-link(href='#') Admin
-                    li.nav-item
-                        a.nav-link(href='#') About us
+                        NuxtLink.nav-link(to="/about") About us
                 form.d-flex.gap-2(role='search')
                     NuxtLink.btn.btn-outline-success.py-2.px-4(to="/auth/register" type='submit') Sign up
                     NuxtLink.btn.btn-success.py-2.px-4(to="/auth/login" type='submit') Login
