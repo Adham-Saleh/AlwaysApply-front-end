@@ -9,7 +9,7 @@
             #navbarSupportedContent.collapse.navbar-collapse
                 ul.navbar-nav.me-auto.mb-2.mb-lg-0.ms-auto.gap-3(style="font-size: 14px")
                     li.nav-item
-                        NuxtLink.nav-link.active(aria-current='page' to="/") Home
+                        NuxtLink.nav-link(aria-current='page' to="/") Home
                     li.nav-item
                         NuxtLink.nav-link(to="/jobs/findjobs") Find jobs
                     li.nav-item

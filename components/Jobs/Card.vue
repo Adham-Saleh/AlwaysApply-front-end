@@ -16,7 +16,7 @@
                 span(style="font-size: 12px; padding: 3px;") {{data?.level}}
         .fw-light.mt-4
             span.fw-bolder {{data.role}}
-            p {{data.description.slice(0, 150)}} load more...
+            p {{data.description.slice(0, 150)}} #[span.fw-bold load more...]
         .requirements.d-none.d-md-block
                 .col.requirements-list.d-flex.algin-items-center.gap-2
                     span.py-1.px-2.rounded-5.border.border-success(v-for="i in ['vue', 'nuxt', 'javascript', 'problem solving', 'Django']")  {{i}}
@@ -35,7 +35,7 @@ defineProps({
       level: "Intermediate",
       role: "Front-end Engineer",
       description:
-        "front end eng needed for shit in a shit his job is to push shit in shit and shut the shi shit front end eng needed for shit in a shit his job is to push shit in shit and shut the shi shitfront end eng needed for shit in a shit his job is to push shit in shit and shut the shi shit load more...",
+        "front end eng needed for shit in a shit his job is to push shit in shit and shut the shi shit front end eng needed for shit in a shit his job is to push shit in shit and shut the shi shitfront end eng needed for shit in a shit his job is to push shit in shit and shut the shi shit",
     },
   },
 });

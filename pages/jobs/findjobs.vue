@@ -21,8 +21,9 @@
                 h4 All Jobs (220)
                 .row.p-3
                     input.form-control.rounded-5(placeholder="Search for jobs")
-                .row.mt-3.bg-light.p-3.rounded.p-2.p-md-0(style="cursor:pointer" v-for="i in 3" :key="i")
-                    JobsCard
+                .row.mt-3.bg-light.p-3.rounded(style="cursor:pointer" v-for="i in 3" :key="i")
+                    NuxtLink.text-decoration-none.text-black(to="/jobs/1")
+                        JobsCard
                 .row.justify-content-center.mt-5
                     button.btn.btn-success.rounded-5.w-25 Load more
 </template>

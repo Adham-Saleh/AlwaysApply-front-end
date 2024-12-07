@@ -4,7 +4,8 @@
             .col-lg-4
                 h3 Login to your account
                 p.text-muted Welcome! back select the bellow login method
-                form(:validationSchema="loginValidationSchema" @submit.prevent)
+                pre {{email}} {{password}}
+                Form(:validationSchema="loginValidationSchema" @submit="onSubmit")
                     InputText(type="text" placeholder="Email" label="Email" name="email" v-model="email")
                     InputText.mt-3(type="password" placeholder="Password" label="Password" name="password" v-model="password")
                     .forget-password.d-flex.justify-content-between
@@ -32,6 +33,11 @@ const loginValidationSchema = object({
     .label("Email"),
   password: string().required("Field is required").label("password"),
 });
+
+const onSubmit = function(values: any) {
+  // post request localhost:8000/login
+}
+
 </script>
 
 <style lang="scss" scoped></style>
