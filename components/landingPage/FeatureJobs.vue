@@ -27,9 +27,9 @@
                     .row.mt-3
                         .div.d-flex.align-content-center.gap-2
                             .div
-                                el-avatar(src="" size="small")
-                                el-avatar(src="" size="small" style="margin-left: -10px")
-                                el-avatar(src="" size="small" style="margin-left: -10px")
+                                el-avatar(src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" size="small")
+                                el-avatar(src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" size="small" style="margin-left: -10px")
+                                el-avatar(src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" size="small" style="margin-left: -10px")
                             span {{card.applicants}} applicants
                     .row.mt-3
                         .d-flex.gap-2
@@ -46,7 +46,7 @@
                 //- img(src=`../../public/hiringCompanies/${i}.png`)
                 img.img-fluid.me-3.me-md-0(src="../../assets/hiringCompanies/1.png" style="max-width: 80px; object: contain;")
                 img.img-fluid.me-3.me-md-0(src="../../assets/hiringCompanies/2.png" style="max-width: 80px; object: contain;")
-                img.img-fluid.me-3.me-md-0(src="../../assets/hiringCompanies/3.png" style="max-width: 80px; object: contain;")
+                //- img.img-fluid.me-3.me-md-0(src="../../assets/hiringCompanies/3.png" style="max-width: 80px; object: contain;")
                 img.img-fluid.me-3.me-md-0(src="../../assets/hiringCompanies/4.png" style="max-width: 80px; object: contain;")
                 img.img-fluid.me-3.me-md-0(src="../../assets/hiringCompanies/5.png" style="max-width: 80px; object: contain;")
 

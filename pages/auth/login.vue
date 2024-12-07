@@ -4,9 +4,9 @@
             .col-lg-4
                 h3 Login to your account
                 p.text-muted Welcome! back select the bellow login method
-                form
-                    InputText(type="text" placeholder="Email" label="Email")
-                    InputText.mt-3(type="password" placeholder="Password" label="Password")
+                form(:validationSchema="loginValidationSchema" @submit.prevent)
+                    InputText(type="text" placeholder="Email" label="Email" name="email" v-model="email")
+                    InputText.mt-3(type="password" placeholder="Password" label="Password" name="password" v-model="password")
                     .forget-password.d-flex.justify-content-between
                         el-checkbox(v-model="checked1" label="Remember me" size="small")
                         NuxtLink.my-auto(to="/" style="font-size: 12px;") Forget password?
@@ -18,6 +18,20 @@
                 img.img-fluid(src="../../assets/authImage.png" style="max-width: 380px")
 </template>
 
-<script setup></script>
+<script setup lang="ts">
+import { object, string, number } from "yup";
+
+const email = ref<string>("");
+const password = ref<string>("");
+const checked1 = ref<boolean>(false);
+
+const loginValidationSchema = object({
+  email: string()
+    .email("Email must be valid")
+    .required("Field is required")
+    .label("Email"),
+  password: string().required("Field is required").label("password"),
+});
+</script>
 
 <style lang="scss" scoped></style>
