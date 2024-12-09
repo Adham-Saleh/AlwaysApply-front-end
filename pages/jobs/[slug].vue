@@ -34,7 +34,22 @@
                 .skills.d-none.d-md-block
                     .col.skills-list.d-flex.algin-items-center.gap-2
                         span.py-1.px-2.rounded-5.border.border-black(v-for="i in ['vue', 'nuxt', 'javascript', 'problem solving', 'Django']")  {{i}}
-            .col-lg-4
+            .col-lg-4.px-5
+                .row
+                    button.btn.btn-success.rounded-4.w-75 Apply Now
+                .row.mt-3
+                    button.btn.btn-outline-success.rounded-4.w-75.algin-center
+                        i.me-3(class="bi bi-heart")
+                        span Save job
+                .row.mt-3.d-flex
+                    span About the client
+                    span.text-muted Sudia Arabia
+                    span.text-muted 2:15 PM
+                    .companyProfile.d-flex.algin-items-center.mt-3
+                        el-avatar.mt-1.me-2(:size="35" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png")
+                        .d-block
+                            span.fw-bold Adham Saleh
+                            p.text-success(style="font-size: 12px;") +100 Positive
 </template>
 
 <script setup lang="ts">
