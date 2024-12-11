@@ -5,7 +5,7 @@
                 h3 Login to your account
                 p.text-muted Welcome! back select the bellow login method
                 pre {{email}} {{password}}
-                Form(:validationSchema="loginValidationSchema" @submit="onSubmit")
+                Form(:validationSchema="loginValidationSchema" @submit="obSubmit")
                     InputText(type="text" placeholder="Email" label="Email" name="email" v-model="email")
                     InputText.mt-3(type="password" placeholder="Password" label="Password" name="password" v-model="password")
                     .forget-password.d-flex.justify-content-between
@@ -34,10 +34,36 @@ const loginValidationSchema = object({
   password: string().required("Field is required").label("password"),
 });
 
-const onSubmit = function(values: any) {
-  // post request localhost:8000/login
-}
+const obSubmit = async function (values: any) {
+  // post request in localhost:8000/signup
+  console.log("values -->", values);
+  try {
+    const { data, error } = await useAsyncData("userLogin", async () => {
+      const res = await $fetch("http://127.0.0.1:8000/api/login", {
+        method: "POST",
+        body: {
+          email: values.email,
+          password: values.password,
+        },
+      });
 
+      console.log("ma resopnse -->", res);
+      return res;
+    });
+    if (error.value) throw new Error("Wrong email or password");
+
+    ElMessage({
+      type: "success",
+      message: "Logged in successfully",
+    });
+    navigateTo("/jobs/findjobs");
+  } catch (err: any) {
+    ElMessage({
+      type: "error",
+      message: err.message,
+    });
+  }
+};
 </script>
 
 <style lang="scss" scoped></style>

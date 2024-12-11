@@ -5,18 +5,18 @@
             .logo
                 img(src=`../../assets/1.png` style="max-width: 40px;")
             .logo-content
-                span {{data?.companyName}}
+                span {{data?.user.name}}
                 .location.algin-items-center.gap-3
                     i(class="bi bi-geo-alt")
                     span {{data?.location}}
         .text-bold.d-flex.align-items-center.gap-2.mt-2
             .bg-success.rounded.text-white
-                span(style="font-size: 12px; padding: 3px;") {{data?.time}}
+                span(style="font-size: 12px; padding: 3px;") {{data?.workingMode}}
             .bg-success.rounded.text-white
                 span(style="font-size: 12px; padding: 3px;") {{data?.level}}
         .fw-light.mt-4
             span.fw-bolder {{data.role}}
-            p {{data.description.slice(0, 150)}} #[span.fw-bold load more...]
+            p {{data?.description.slice(0, descriptionLimit)}} #[span.fw-bold load more...]
         .requirements.d-none.d-md-block
                 .col.requirements-list.d-flex.algin-items-center.gap-2
                     span.py-1.px-2.rounded-5.border.border-success(v-for="i in ['vue', 'nuxt', 'javascript', 'problem solving', 'Django']")  {{i}}
@@ -24,6 +24,8 @@
 </template>
 
 <script setup lang="ts">
+const descriptionLimit = ref<number>(150);
+
 defineProps({
   data: {
     default: {
