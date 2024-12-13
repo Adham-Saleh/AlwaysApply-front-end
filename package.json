@@ -10,9 +10,11 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@pinia/nuxt": "^0.9.0",
     "@vee-validate/nuxt": "^4.14.7",
     "bootstrap-icons": "^1.11.3",
     "nuxt": "^3.14.1592",
+    "pinia": "^2.3.0",
     "pug": "^3.0.3",
     "remixicon": "^4.5.0",
     "vue": "latest",

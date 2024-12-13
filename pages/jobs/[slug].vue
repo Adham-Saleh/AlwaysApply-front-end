@@ -1,5 +1,6 @@
 <template lang="pug">
     .container.pt-5.pb-5
+        //- pre {{job}}
         .row
             .col-lg-9
                 h3 {{job?.title}}
@@ -7,7 +8,7 @@
                     span.text-muted {{job?.createdAt}} 
                     .location.algin-items-center.gap-3.text-muted
                         i(class="bi bi-geo-alt")
-                        span Damietta, Egypt
+                        span {{job?.location}}
                 span Make sure to read description and requirements carefully
                 el-divider
                 .requirements
@@ -22,7 +23,7 @@
                 .finance-and-level
                     .d-flex.justify-content-around
                         .price.d-block
-                            span  {{job?.price || '20$' }} 
+                            span  {{job?.price || '20' }}$
                             br
                             span.text-muted(style="font-size: 12px") Fixed Price
                         .level
@@ -42,13 +43,13 @@
                         span Save job
                 .row.mt-3.d-flex
                     span About the client
-                    span.text-muted {{job?.user.location || 'Damietta, Egypt'}}
+                    span.text-muted {{job?.user_details?.location || 'Damietta, Egypt'}}
                     span.text-muted 2:15 PM
                     .companyProfile.d-flex.algin-items-center.mt-3
                         el-avatar.mt-1.me-2(:size="35" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png")
                         .d-block
-                            span.fw-bold {{job?.user.name}}
-                            p.text-success(style="font-size: 12px;") {{job?.user.rating || '+100 Positive'}}
+                            span.fw-bold {{job?.user_details?.name}}
+                            p.text-success(style="font-size: 12px;") {{job?.user_details?.rating || '+100 Positive'}}
 </template>
 
 <script setup lang="ts">

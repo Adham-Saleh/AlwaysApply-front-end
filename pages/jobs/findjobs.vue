@@ -7,7 +7,7 @@
         //-         input.form-control.border-0.bg-light(placeholder="Search for jobs")
         //-     .col-lg-2
         //-         button.btn.btn-success Search
-        .row.mt-5(v-if="jobs?.length")
+        .row.mt-5(v-if="true")
             .col-lg-3
                 h4 Filter
                 .row
@@ -21,7 +21,7 @@
                 h4 All Jobs ({{jobs?.length}})
                 .row.p-3
                     input.form-control.rounded-5(placeholder="Search for jobs")
-                .row.mt-3.bg-light.p-3.rounded(style="cursor:pointer" v-for="job in jobs" :key="job?.id")
+                .row.mt-3.bg-light.p-3.rounded(style="cursor:pointer" v-for="job in jobs?.results" :key="job?.id")
                     NuxtLink.text-decoration-none.text-black(:to="`/jobs/${job?.id}`")
                         JobsCard(:data="job")
                 .row.justify-content-center.mt-5

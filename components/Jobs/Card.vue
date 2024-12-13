@@ -5,7 +5,7 @@
             .logo
                 img(src=`../../assets/1.png` style="max-width: 40px;")
             .logo-content
-                span {{data?.user.name}}
+                span {{data?.user_details?.name}}
                 .location.algin-items-center.gap-3
                     i(class="bi bi-geo-alt")
                     span {{data?.location}}
@@ -15,7 +15,7 @@
             .bg-success.rounded.text-white
                 span(style="font-size: 12px; padding: 3px;") {{data?.level}}
         .fw-light.mt-4
-            span.fw-bolder {{data.role}}
+            span.fw-bolder {{data?.user_details?.role}}
             p {{data?.description.slice(0, descriptionLimit)}} #[span.fw-bold load more...]
         .requirements.d-none.d-md-block
                 .col.requirements-list.d-flex.algin-items-center.gap-2
@@ -29,6 +29,7 @@ const descriptionLimit = ref<number>(150);
 defineProps({
   data: {
     default: {
+      name: "Adham Saleh",
       createdAt: "posted 2m ago",
       companyLogo: "../../assets/1.png",
       companyName: "Google",

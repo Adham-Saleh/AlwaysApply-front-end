@@ -1,6 +1,6 @@
 <template lang="pug">
     .container.pt-5
-        .row
+        .row.custom-bg
             .col-lg-6.my-auto
                 h1 Find a job that aligns with your interests and skills
                 p.mb-5 Thousands of jobs in all the leading sector are waiting for you.

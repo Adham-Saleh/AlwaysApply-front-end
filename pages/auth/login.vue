@@ -4,15 +4,14 @@
             .col-lg-4
                 h3 Login to your account
                 p.text-muted Welcome! back select the bellow login method
-                pre {{email}} {{password}}
-                Form(:validationSchema="loginValidationSchema" @submit="obSubmit")
+                Form(:validationSchema="loginValidationSchema" @submit="onSubmit")
                     InputText(type="text" placeholder="Email" label="Email" name="email" v-model="email")
                     InputText.mt-3(type="password" placeholder="Password" label="Password" name="password" v-model="password")
                     .forget-password.d-flex.justify-content-between
                         el-checkbox(v-model="checked1" label="Remember me" size="small")
                         NuxtLink.my-auto(to="/" style="font-size: 12px;") Forget password?
-                    el-button.w-100.mt-3.mb-3(native-type="submit" style=" height: 56px;" type="success") Login
-                    el-divider(content-position='center') or login with
+                    el-button.w-100.mt-3.mb-3(native-type="submit" :loading="loading" style=" height: 56px;" type="success") Login
+                    el-divider(content-position='center'): span.bg-light or login with
                     .social-login
 
             .col-lg-4.text-center.d-none.d-md-block
@@ -21,10 +20,13 @@
 
 <script setup lang="ts">
 import { object, string, number } from "yup";
+import { userStore } from "@/store/auth";
 
+const currentUserStore = userStore();
 const email = ref<string>("");
 const password = ref<string>("");
 const checked1 = ref<boolean>(false);
+const loading = ref<boolena>(false);
 
 const loginValidationSchema = object({
   email: string()
@@ -34,35 +36,25 @@ const loginValidationSchema = object({
   password: string().required("Field is required").label("password"),
 });
 
-const obSubmit = async function (values: any) {
-  // post request in localhost:8000/signup
-  console.log("values -->", values);
-  try {
-    const { data, error } = await useAsyncData("userLogin", async () => {
-      const res = await $fetch("http://127.0.0.1:8000/api/login", {
-        method: "POST",
-        body: {
-          email: values.email,
-          password: values.password,
-        },
-      });
-
-      console.log("ma resopnse -->", res);
-      return res;
-    });
-    if (error.value) throw new Error("Wrong email or password");
-
+const onSubmit = async function (values: any) {
+  loading.value = true;
+  const { success, message, user } = await currentUserStore.login(values);
+  if (success) {
     ElMessage({
       type: "success",
-      message: "Logged in successfully",
+      message: message,
     });
+    currentUserStore.setData(user, user?.jwt);
+    currentUserStore.logged();
     navigateTo("/jobs/findjobs");
-  } catch (err: any) {
+  } else {
     ElMessage({
       type: "error",
-      message: err.message,
+      message: message,
     });
   }
+  loading.value = false;
+  console.log("current user -->", currentUserStore);
 };
 </script>
 

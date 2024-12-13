@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   compatibilityDate: "2024-11-01",
   devtools: { enabled: true },
-  modules: ["@element-plus/nuxt", "@vee-validate/nuxt"],
+  modules: ["@element-plus/nuxt", "@vee-validate/nuxt", "@pinia/nuxt"],
   elementPlus: {
     /** Options */
   },

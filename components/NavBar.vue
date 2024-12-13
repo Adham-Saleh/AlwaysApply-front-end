@@ -12,18 +12,62 @@
                         NuxtLink.nav-link(aria-current='page' to="/") Home
                     li.nav-item
                         NuxtLink.nav-link(to="/jobs/findjobs") Find jobs
-                    li.nav-item
-                        a.nav-link(href='#') Employers
+                    li.nav-item(v-if="store.user?.role === 'company'")
+                        NuxtLink.nav-link(to='/dashboard/jobs') Employers
                     li.nav-item
                         NuxtLink.nav-link(to="/about") About us
                 form.d-flex.gap-2(role='search')
-                    NuxtLink.btn.btn-outline-success.py-2.px-4(to="/auth/register" type='submit') Sign up
-                    NuxtLink.btn.btn-success.py-2.px-4(to="/auth/login" type='submit') Login
-                    button.btn.d-block
-                        i(class="bi bi-globe me-2")
-                        span(class="font-size: 9px;") العربيه
+                    NuxtLink.btn.btn-outline-success.py-2.px-4(to="/auth/register" v-if="!store.isLoggedIn" type='submit') Sign up
+                    NuxtLink.btn.btn-success.py-2.px-4(to="/auth/login" type='submit' v-if="!store.isLoggedIn" ) Login
+
+                    .user-avatar.d-flex.align-items-center(v-else)
+
+                        el-dropdown
+                            el-avatar.el-dropdown-link(:size="50" :src="`${store.user?.image ? store.user.image : 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'}`")
+                            template(#dropdown)
+                                el-dropdown-menu
+                                    el-dropdown-item(v-for="item in profileMenu")
+                                        .d-flex.algin-content-center.justify-content-center.gap-1
+                                            h5
+                                                i(:class="item.icon")
+                                            span {{item.name}}
+                                    el-divider.p-0.m-0
+                                    el-dropdown-item(@click="handleUserLogout")
+                                        .d-flex.algin-content-center.justify-content-center.gap-1.text-danger
+                                            h5 
+                                                i(class="bi bi-box-arrow-left")
+                                            span Logout
+                        .d-flex.flex-column.algin-content-center.justify-content-center
+                            span.m-0(style="font-size: 14px") {{store.user?.name}}
+                            span.m-0(style="font-size: 12px") {{store.user?.role}}
+                    //- button.btn.d-block
+                    //-     i(class="bi bi-globe me-2")
+                    //-     span(class="font-size: 9px;") العربيه
 </template>
 
-<script setup></script>
+<script setup>
+import { userStore } from "@/store/auth";
+
+const store = userStore();
+
+const profileMenu = [
+  {
+    name: "Profile",
+    link: "/",
+    icon: "bi bi-person-circle",
+  },
+  {
+    name: "Contracts",
+    link: "/",
+    icon: "bi bi-receipt",
+  },
+];
+
+const handleUserLogout = async function () {
+  const { message, success } = await store.logout();
+
+  if (success) store.checkAuthority(600);
+};
+</script>
 
 <style lang="scss" scoped></style>

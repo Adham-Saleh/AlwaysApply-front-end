@@ -6,19 +6,26 @@
             pre {{fullName}}
             .col
                 Form(:validationSchema="rgistrationSchema" @submit="onSubmit")
-                    InputText(type="text" placeholder="Full name" label="Full name*" name="fullName")
+                    InputUploadFile(:name="profileImg" :limit="1" :formats="['jpeg', 'png', 'jpg']" label="Profile picture" @uploadedImage="handleImageUpload")
+                    InputText.mt-2(type="text" placeholder="Full name" label="Full name*" name="fullName")
                     InputText.mt-3(type="text" placeholder="Email" label="Email*" name="email")
-                    InputText.mt-3(type="password" placeholder="Password" label="Password*" name="password")
+                    InputText.mt-3.mb-3(type="password" placeholder="Password" label="Password*" name="password")
                     //- InputText.mt-3(type="text" placeholder="ٌRole" label="Role*" name="role")
-                    el-button.mt-3.mb-3(native-type="submit" style=" height: 45px;" type="success") Register Now
+                    InputSelect(label="Role*" name="role" placeholder="Choose role" :options="['Company', 'Freelancer']")
+                    el-button.mt-3.mb-3(native-type="submit" :loading="loading" style=" height: 45px;" type="success") Register Now
 </template>
 
 <script setup lang="ts">
 import { object, string, number } from "yup";
+import { userStore } from "@/store/auth";
 
+const currentUserStore = userStore();
+console.log(currentUserStore);
 const specialChar = /[!@#$%^&*(),.?":{}|<>]/;
 const capitalLetter = /[A-Z]/;
 const phoneNumber = /^(010|011|012|015)[0-9]{8}$/;
+const profilePicture = ref();
+const loading = ref<boolean>(false);
 
 const rgistrationSchema = object({
   fullName: string().required("Field is required").label("Full name"),
@@ -34,47 +41,38 @@ const rgistrationSchema = object({
       capitalLetter,
       "Password must contains at least one capital letter"
     ),
-  // phone: string()
-  //   .required("Field is required")
-  //   .matches(
-  //     phoneNumber,
-  //     "Please enter a valid Egyption mobile number hint: conatins 11 digits starting with 010, 011. 012 or 015 "
-  //   )
-  //   .label("Mobile Number"),
+  role: string().required("Field is required").label("Role"),
 });
 
 const onSubmit = async function (values: any) {
-  // post request in localhost:8000/signup
-  console.log("values -->", values);
-  try {
-    const { data, error } = await useAsyncData("userRegistration", async () => {
-      const res = await $fetch("http://127.0.0.1:8000/api/register", {
-        method: "POST",
-        body: {
-          name: values.fullName,
-          email: values.email,
-          password: values.password,
-          role: "company",
-        },
-      });
+  loading.value = true;
+  const { user, message, success } = await currentUserStore.register(
+    values,
+    profilePicture
+  );
 
-      console.log("ma resopnse -->", res);
-      return res;
-    });
-
-    if (error.value) throw new Error("Cannot Sign up");
-
+  if (success) {
     ElMessage({
       type: "success",
-      message: "Account created successfully",
+      message: message,
     });
     navigateTo("/auth/login");
-  } catch (err: any) {
-    ElMessage({
-      type: "error",
-      message: err.message,
+  } else {
+    const errors = Object.values(message).map((singleError: any) =>
+      singleError.pop()
+    );
+    errors.forEach((error) => {
+      ElMessage({
+        type: "error",
+        message: error,
+      });
     });
   }
+  loading.value = false;
+};
+
+const handleImageUpload = function (file: any) {
+  profilePicture.value = file;
 };
 </script>
 
