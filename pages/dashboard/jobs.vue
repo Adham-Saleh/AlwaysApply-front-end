@@ -3,7 +3,7 @@
         .row
             .col-lg-2
                 el-menu.el-menu-vertical-demo(default-active='2' :collapse='isCollapse' @open='handleOpen' @close='handleClose')
-                    el-sub-menu(index='1')
+                    el-menu-item(index='1')
                         template(#title='')
                             i.me-2(class="bi bi-award-fill")
                             span Jobs
@@ -52,15 +52,33 @@ const handleClick = (tab: TabsPaneContext, event: Event) => {
   border: none;
 }
 
-.el-sub-menu {
-  background: linear-gradient(90deg, #dcb8f6 11%, #e2ccf2 100%);
-  border-radius: 10px !important;
+// .el-sub-menu {
+//   background: linear-gradient(90deg, #dcb8f6 11%, #e2ccf2 100%);
+//   border-radius: 10px !important;
 
-  > * {
-    height: 42px;
+//   > * {
+//     height: 42px;
+//   }
+//   &:hover {
+//     background: rgb(132, 132, 132);
+//   }
+// }
+
+.el-menu {
+  --el-menu-item-height: 45px !important;
+  --el-menu-sub-item-height: 45px !important;
+  .el-menu-item,
+  .el-sub-menu__title {
+    margin-bottom: 8px;
+    border-radius: 10px;
+    font-weight: 400;
+    line-height: 140%;
   }
-  &:hover {
-    background: rgb(132, 132, 132);
+  .el-menu-item.is-active {
+    background: linear-gradient(90deg, #dcb8f6 11%, #e2ccf2 100%);
+    font-weight: 500;
+    color: black;
   }
 }
+
 </style>

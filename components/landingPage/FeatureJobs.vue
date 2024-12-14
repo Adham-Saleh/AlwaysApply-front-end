@@ -3,18 +3,17 @@
         .row.text-center.align-items-center
             h2 Featured Jobs
             p.text-muted Choose jobs from the top employers and apply for the same.
-        .row.justify-content-center.gap-3.mt-5
-            .col-lg-3(v-for="card,idx in cards" :key="card.title")
+        .row.mt-5
+            .col-lg-4(v-for="card,idx in cards" :key="card.title")
                 .container.rounded.p-3.border(style="background: #F8F2FC;")
                     .row
                         .fw-bold.d-flex.justify-content-between
                             span {{card.title}}
                             i(class="bi bi-bookmark")
-                    .row
+                    .row.mt-1
                         .text-bold.d-flex.align-items-center.gap-2
-                            .bg-success.rounded.text-white
-                                span(style="font-size: 12px; padding: 3px;") {{card.time}}
-                            //- span(style="font-size: 14px;") Salary: 20,000 INR - 25,000 INR
+                            span.py-1.px-2.my-auto.rounded-5(style="background-color: #D8F3F5; font-size: 12px; width: fit-content;") {{card.time}}
+                            span.py-1.px-2.my-auto.rounded-5(style="background-color: #D8F3F5; font-size: 12px; width: fit-content;") Entry
                     .row.mt-4
                         .logo-container.d-flex.gap-2.text-muted.align-items-center
                             .logo
@@ -36,12 +35,12 @@
                             button.btn.btn-outline-success.w-100.w-md-auto View Details
                             button.btn.btn-success.w-100.w-md-auto Apply Now
         .row.mt-3
-            a.text-center.fw-bolder(href="" class="font-size: 24px;") View All
+            NuxtLink.text-center.fw-bolder(to="/jobs/findjobs" class="font-size: 24px;") View All
         
         .row.mt-5
             el-divider(content-position='center') Top companies hiring now
         .row.mt-2
-            .col.d-block.d-md-flex.justify-content-between.text-center.text-md-start.p-5
+            .col.d-block.d-md-flex.justify-content-between.text-center.text-md-start.p-5.custom-style
                 //- pre {{`../../public/hiringCompanies/${i}.png`}}
                 //- img(src=`../../public/hiringCompanies/${i}.png`)
                 img.img-fluid.me-3.me-md-0(src="../../assets/hiringCompanies/1.png" style="max-width: 80px; object: contain;")
@@ -78,4 +77,11 @@ const cards = [
 ];
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+// .custom-style {
+//     img {
+//         aspect-ratio: 2 / 1;
+//     }
+// }
+
+</style>
