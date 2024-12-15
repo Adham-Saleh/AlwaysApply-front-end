@@ -2,9 +2,40 @@
 export default defineNuxtConfig({
   compatibilityDate: "2024-11-01",
   devtools: { enabled: true },
-  modules: ["@element-plus/nuxt", "@vee-validate/nuxt", "@pinia/nuxt"],
+  modules: [
+    "@element-plus/nuxt",
+    "@vee-validate/nuxt",
+    "@pinia/nuxt",
+    "@vueuse/nuxt",
+    "@vueuse/motion/nuxt",
+  ],
+  runtimeConfig: {
+    public: {
+      motion: {
+        directives: {
+          "pop-bottom": {
+            initial: {
+              // scale: 0,
+              opacity: 0,
+              y: 100,
+            },
+            visible: {
+              // scale: 1,
+              opacity: 1,
+              y: 0,
+            },
+          },
+        },
+      },
+    },
+  },
   elementPlus: {
     /** Options */
+  },
+  runtimeConfig: {
+    public: {
+      API_BASE_URL: process.env.API_BASE_URL || "http://localhost:8000",
+    },
   },
   app: {
     head: {

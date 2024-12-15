@@ -1,5 +1,5 @@
 <template lang="pug">
-    nav.navbar.navbar-expand-lg.bg-body-tertiary
+    nav.navbar.navbar-expand-lg.bg-body-tertiary.header
         .container.p-2
             NuxtLink.navbar-brand(to="/")
                 i.me-2(class="bi bi-search-heart")
@@ -71,10 +71,19 @@ const handleUserLogout = async function () {
 </script>
 
 <style lang="scss" scoped>
-.el-dropdown-menu__item  {
-    > * {
-        justify-content: center;
-    }
+.el-dropdown-menu__item {
+  > * {
+    justify-content: center;
+  }
 }
 
+// .header {
+//   position: fixed;
+//   top: 0;
+//   left: 0;
+//   right: 0;
+//   z-index: 1;
+//   transition: 0.3s ease;
+//   background: white;
+// }
 </style>

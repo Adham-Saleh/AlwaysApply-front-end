@@ -4,8 +4,8 @@
             h2 Featured Jobs
             p.text-muted Choose jobs from the top employers and apply for the same.
         .row.mt-5
-            .col-lg-4(v-for="card,idx in cards" :key="card.title")
-                .container.rounded.p-3.border(style="background: #F8F2FC;")
+            .col-lg-4.mt-3.mt-lg-0(v-for="card,idx in cards" :key="card.title")
+                .cardMain.container.rounded-5.p-4.border(style="background: #F8F2FC;")
                     .row
                         .fw-bold.d-flex.justify-content-between
                             span {{card.title}}
@@ -32,14 +32,15 @@
                             span {{card.applicants}} applicants
                     .row.mt-3
                         .d-flex.gap-2
-                            button.btn.btn-outline-success.w-100.w-md-auto View Details
-                            button.btn.btn-success.w-100.w-md-auto Apply Now
-        .row.mt-3
-            NuxtLink.text-center.fw-bolder(to="/jobs/findjobs" class="font-size: 24px;") View All
+                            button.btn.btn-outline-success.w-100.w-md-auto.rounded-5 View Details
+                            button.btn.btn-success.w-100.w-md-auto.rounded-5 Apply Now
+        .row.mt-4
+            NuxtLink.text-center(to="/jobs/findjobs" class="font-size: 24px;")
+                el-button.rounded-5.w-25.py-4.px-3 View All
         
-        .row.mt-5
+        //- .row.mt-5
             el-divider(content-position='center') Top companies hiring now
-        .row.mt-2
+        //- .row.mt-2
             .col.d-block.d-md-flex.justify-content-between.text-center.text-md-start.p-5.custom-style
                 //- pre {{`../../public/hiringCompanies/${i}.png`}}
                 //- img(src=`../../public/hiringCompanies/${i}.png`)
@@ -78,10 +79,27 @@ const cards = [
 </script>
 
 <style lang="scss" scoped>
-// .custom-style {
-//     img {
-//         aspect-ratio: 2 / 1;
-//     }
-// }
+.cardMain {
+  //   .logo-container {
+  //     .logo {
+  //       transition: transform ease-in-out 0.3s;
+  //     }
+  //   }
 
+  //   &:hover {
+  //     .logo-container {
+  //       .logo {
+  //         transform: scale(1.2);
+  //         transition: transform ease-in-out 0.3s;
+  //       }
+  //     }
+  //   }
+
+  //   transition: transform ease-in-out 0.3s;
+
+  //   &:hover {
+  //     transform: scale(1.05);
+  //     transition: transform ease-in-out 0.3s;
+  //   }
+}
 </style>

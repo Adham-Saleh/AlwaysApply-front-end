@@ -12,7 +12,7 @@
                   .content
                     h3 Dashboard
                     p.text-muted Manage you business fastly and safely
-                  el-button.me-5.d-flex.align-content-center
+                  el-button.me-5.d-flex.align-content-center.py-4.px-4.rounded-5
                     i.me-1(class="bi bi-plus-lg") 
                     span(@click="navigateTo('/dashboard/newjob')") Add job
                 el-tabs.demo-tabs(v-model='activeName' @tab-click='handleClick')
@@ -80,5 +80,4 @@ const handleClick = (tab: TabsPaneContext, event: Event) => {
     color: black;
   }
 }
-
 </style>
