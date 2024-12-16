@@ -13,20 +13,12 @@ export const userStore = defineStore("userStore", {
   actions: {
     setData(user: any, token: "") {
       console.log("setting data -->", user, token);
-      if (process.client) {
-        localStorage.setItem("user", JSON.stringify(user));
-        console.log("setting item --> ", user, JSON.stringify(user));
-      }
+      localStorage.setItem("user", JSON.stringify(user));
       const tokenCookie = useCookie("token:auth");
       tokenCookie.value = token;
       this.token = token;
-      if (process.client) {
-        console.log("in client -->");
-        const userData = localStorage.getItem("user");
-        console.log(userData);
-        console.log(JSON.parse(userData));
-        this.user = userData ? JSON.parse(userData) : null;
-      }
+      const userData = localStorage.getItem("user");
+      this.user = userData ? JSON.parse(userData) : null;
     },
 
     logged() {
@@ -119,46 +111,36 @@ export const userStore = defineStore("userStore", {
         this.isLoggedIn = false;
       }
 
-      // if (this.token) {
-      //   console.log("erntered token function");
-      //   const { data, error } = await useAsyncData(
-      //     "checkAuthority",
-      //     async () => {
-      //       const res = await $fetch(
-      //         "https://adhamsaleh.pythonanywhere.com/api/user",
-      //         {
-      //           method: "GET",
-      //           headers: { Authorization: `Bearer ${this.token}` },
-      //         }
-      //       );
-      //       return res;
-      //     }
-      //   );
+      if (this.token) {
+        // console.log("erntered token function");
+        // const { data, error } = await useAsyncData(
+        //   "checkAuthority",
+        //   async () => {
+        //     const res = await $fetch(
+        //       "https://adhamsaleh.pythonanywhere.com/api/user",
+        //       {
+        //         method: "GET",
+        //         headers: { Authorization: `Bearer ${this.token}` },
+        //       }
+        //     );
+        //     return res;
+        //   }
+        // );
 
-      //   // console.log("auth -->", data, error);
-      //   this.logged();
-      //   if (process.client) {
-      //     const userData = localStorage.getItem("user");
-      //     this.user = userData ? JSON.parse(userData) : null;
-      //   }
-      //   if (data.value?.success) {
-      //     this.logged();
-      //   }
-
-      //   console.log(error);
-      //   return data;
-      if (process.client) {
-        // Get user data from localStorage
-        const userData = localStorage.getItem("user");
-
-        try {
-          // Parse only if it’s valid JSON
-          this.user =
-            userData && userData.startsWith("{") ? JSON.parse(userData) : null;
-        } catch (error) {
-          console.error("Invalid JSON in localStorage:", userData, error);
-          this.user = "null"; // Reset user if JSON parsing fails
+        // console.log("auth -->", data, error);
+        this.logged();
+        if (process.client) {
+          const userData = localStorage.getItem("user");
+          this.user = userData ? JSON.parse(userData) : null;
         }
+        // if (data.value?.success) {
+        //   this.logged();
+        // }
+
+        // console.log(error);
+        // return data;
+      } else {
+        useCookie("token:auth").value = "";
       }
     },
   },

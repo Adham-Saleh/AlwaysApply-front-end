@@ -3,6 +3,7 @@
         .row.border.rounded-4.p-4
             .job.d-flex.justify-content-between.align-items-center
                 .job-info
+                    //- pre {{job}}
                     h3 You are applying to #[span.text-muted {{slug}} ]
                     span Front-end role at Google inc
                 .job-action
@@ -23,7 +24,7 @@
                     .endBar.d-flex.justify-content-end
                         .actions
                             el-button.rounded-5.px-5.py-4(@click="navigateTo('/')") Cancel
-                            el-button.rounded-5.px-5.py-4(type="success") Apply
+                            el-button.rounded-5.px-5.py-4(native-type="submit" type="success") Apply
 
 
 </template>
@@ -32,17 +33,45 @@
 import { object, string, number } from "yup";
 import { userStore } from "@/store/auth";
 
-const onSubmit = function () {};
 const route = useRoute();
+const store = userStore();
+const config = useRuntimeConfig();
 const slug = route.params.slug;
+const loading = ref<boolean>(false);
 
 const applyForm = object({
-  email: string()
-    .email("Email must be valid")
-    .required("Field is required")
-    .label("Email"),
-  password: string().required("Field is required").label("password"),
+  duration: string().required("Field is required").label("Duration"),
+  amount: string().required("Field is required").label("Amount"),
+  proposal: string()
+    .required("Fiend is required")
+    .max(1000, "Proposal cannot exceed 1000 charachter")
+    .label("Proposal"),
 });
+
+const { data: job, error } = useAsyncData("getJobs", async () => {
+  const res = await $fetch(`${config.public.API_BASE_URL}jobs/${slug}`);
+
+  return res;
+});
+
+const onSubmit = async function (values: any) {
+  loading.value = true;
+  const { data, error } = await useAsyncData("apply", async () => {
+    const res = await $fetch(`${config.public.API_BASE_URL}apply`, {
+      method: "POST",
+      body: {
+        job: job?.id,
+        freelancer: store?.user?.id,
+        company: job?.user_details?.id,
+        proposal: values.proposal,
+        price: values.amount,
+        duration: values.duration,
+        status: "PENDING",
+      },
+    });
+  });
+  loading.value = false;
+};
 </script>
 
 <style lang="scss" scoped>
