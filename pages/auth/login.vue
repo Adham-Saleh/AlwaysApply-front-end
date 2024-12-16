@@ -11,8 +11,8 @@
                         el-checkbox(v-model="checked1" label="Remember me" size="small")
                         NuxtLink.my-auto(to="/" style="font-size: 12px;") Forget password?
                     el-button.w-100.mt-3.mb-3(native-type="submit" :loading="loading" style=" height: 56px;" type="success") Login
-                    el-divider(content-position='center'): span.bg-light or login with
-                    .social-login
+                    //- el-divider(content-position='center'): span.bg-light or login with
+                    //- .social-login
                       .row
                         .col-lg-4(v-for="i in 3" :key="i").d-flex.justify-content-center
                           .card.text-center.p-2.w-50.cursor-pointer.rounded-5(@click="console.log('social-login')")
@@ -66,10 +66,9 @@ const onSubmit = async function (values: any) {
 </script>
 
 <style lang="scss" scoped>
-
 .el-divider {
   > * {
-    background-color: #F8F9FA !important;
+    background-color: #f8f9fa !important;
   }
 }
 </style>

@@ -7,14 +7,13 @@
                 h4 Filter
                 .row
                     .col-lg-12
-                        InputSelect.custom-style(label="Working mode" :options="['Full time', 'Part time']")
+                        InputSelect.custom-style(label="Working mode" name="workingMode" :options="['Full time', 'Part time']")
                     .col-lg-12.mt-2
-                        InputSelect.custom-style(label="Level" :options="['Entry', 'Intermediate', 'Advanced']")
+                        InputSelect.custom-style(label="Level" name="level" :options="['Entry', 'Intermediate', 'Advanced']")
                 el-divider
             .col-lg-9
                 h4 All Jobs ({{jobs?.results?.length}})
                 .row.p-3
-                    pre {{search}}
                     input.form-control.rounded-5.p-3(placeholder="Search for jobs" v-model="search")
                 .row.mt-3.bg-light.p-3.rounded(style="cursor:pointer" v-for="job in jobs?.results" :key="job?.id" v-motion :initial ="initial" :enter="enter" :leave="initial" :duration="1000")
                     NuxtLink.text-decoration-none.text-black(:to="`/jobs/${job?.id}`")
