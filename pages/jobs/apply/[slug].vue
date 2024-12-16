@@ -1,5 +1,6 @@
 <template lang="pug">
     .container.pt-5.pb-5
+        pre {{userStore?.user}}
         .row.border.rounded-4.p-4
             .job.d-flex.justify-content-between.align-items-center
                 .job-info

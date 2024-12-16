@@ -1,6 +1,6 @@
 <template lang="pug">
-    //- pre {{tableData}}
-    el-table(:data='jobs' style='width: 100%;')
+    pre {{tableData}}
+    el-table(:data='jobs' :loading="true" style='width: 100%;')
                 
         el-table-column(type='selection' width='55')
 
@@ -24,7 +24,7 @@
                             i(class="bi bi-arrow-down-short")
                         template(#dropdown)
                             .statusMenu                        
-                                el-dropdown-item.w-full(v-for="role in ['front-end', 'back-end']" class="font-medium  !text-[#1F1F21]"  @click="console.log('role clicked')"  :key="role") {{role}}
+                                el-dropdown-item.w-full(v-for="role in titles.job_titles" class="font-medium  !text-[#1F1F21]"  @click="console.log('role clicked')"  :key="role") {{role}}
             template(#default='scope')
                 p.py-1.px-2.my-auto.rounded-5(style="background-color: #D8F3F5; height: 100%; width: fit-content;") {{scope.row.title}}
 
@@ -75,23 +75,30 @@ import { userStore } from "@/store/auth";
 
 const store = userStore();
 const config = useRuntimeConfig();
+const loading = ref<boolean>(false);
 
-const tableData = [
-  {
-    freelancer: "Adham saleh",
-    jobTitle: "Front-end dev",
-    location: "Damietta, Egypt",
-  },
-];
+// const { data: jobs, error } = useAsyncData(
+//   "getCompanyJobs",
+//   async () => {
+//     const res = await $fetch(
+//       `${config.public.API_BASE_URL}companies/${store?.user?.id}/jobs`
+//     );
+//     return res;
+//   },
+//   { immediate: true }
+// );
 
-const { data: jobs, error } = await useAsyncData("getCompanyJobs", async () => {
-  const res = await $fetch(
-    `${config.public.API_BASE_URL}companies/${store?.user?.id}/jobs`
-  );
+const {
+  data: jobs,
+  pending,
+  error,
+} = useFetch(`${config.public.API_BASE_URL}companies/${store?.user?.id}/jobs`);
+
+const { data: titles } = useAsyncData("getJobsTitle", async () => {
+  const res = await $fetch(`${config.public.API_BASE_URL}jobs/titles/`);
   return res;
 });
-
-console.log(jobs, error);
+console.log(titles);
 </script>
 
 <style scoped></style>

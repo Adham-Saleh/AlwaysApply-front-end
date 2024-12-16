@@ -1,5 +1,6 @@
 <template lang="pug">
     .container.pt-5.pb-5
+        pre {{userStore?.user}}
         .row.align-items-center.bg-light.rounded.shadow.py-5.px-2.px-lg-5.py-lg-5.justify-content-center
             .col-lg-4
                 h3 Login to your account

@@ -1,5 +1,6 @@
 <template lang="pug">
     .container.pt-5.pb-5
+        pre {{userStore?.user}}
         .row.align-items-center.bg-light.rounded.shadow.px-2.py-4.px-lg-5.py-lg-5.justify-content-center
             h3 Registration form
             p.text-muted Register to apply for jobs of your choice all over the world
