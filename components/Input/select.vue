@@ -20,7 +20,7 @@ const props = defineProps({
   },
   placeholder: {
     type: String,
-    required: true,
+    required: false,
   },
   options: {
     type: Array,

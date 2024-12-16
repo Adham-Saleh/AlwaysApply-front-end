@@ -113,26 +113,26 @@ export const userStore = defineStore("userStore", {
 
       if (this.token) {
         // console.log("erntered token function");
-        const { data, error } = await useAsyncData(
-          "checkAuthority",
-          async () => {
-            const res = await $fetch(
-              "https://adhamsaleh.pythonanywhere.com/api/user",
-              {
-                method: "GET",
-                body: {
-                  token: this.token,
-                },
-              }
-            );
-            return res;
-          }
-        );
+        // const { data, error } = await useAsyncData(
+        //   "checkAuthority",
+        //   async () => {
+        //     const res = await $fetch(
+        //       "https://adhamsaleh.pythonanywhere.com/api/user",
+        //       {
+        //         method: "GET",
+        //         headers: { Authorization: `Bearer ${this.token}` },
+        //       }
+        //     );
+        //     return res;
+        //   }
+        // );
 
-        console.log("auth -->", data, error);
+        // console.log("auth -->", data, error);
         this.logged();
-        const userData = localStorage.getItem("user");
-        this.user = userData ? JSON.parse(userData) : null;
+        if (process.client) {
+          const userData = localStorage.getItem("user");
+          this.user = userData ? JSON.parse(userData) : null;
+        }
         // if (data.value?.success) {
         //   this.logged();
         // }
