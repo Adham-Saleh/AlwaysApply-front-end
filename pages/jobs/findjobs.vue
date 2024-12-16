@@ -44,7 +44,9 @@ const { data: jobs, error } = useAsyncData(
   "getJobs",
   async () => {
     const res = await $fetch(
-      `${config.public.API_BASE_URL}jobs/?size=${limit.value}`
+      `${config.public.API_BASE_URL}jobs/?size=${limit.value}&title=${
+        search.value ? search.value : ""
+      }`
     );
 
     return res;

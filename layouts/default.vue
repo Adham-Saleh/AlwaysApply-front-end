@@ -11,7 +11,10 @@ import { userStore } from "@/store/auth";
 
 const store = userStore();
 console.log("store -->", store);
-store.checkAuthority();
+
+(async () => {
+  const res = await store.checkAuthority(0);
+})();
 </script>
 
 <style scoped></style>
