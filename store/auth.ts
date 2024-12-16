@@ -17,7 +17,8 @@ export const userStore = defineStore("userStore", {
       const tokenCookie = useCookie("token:auth");
       tokenCookie.value = token;
       this.token = token;
-      this.user = JSON.parse(localStorage.getItem("user"));
+      const userData = localStorage.getItem("user");
+      this.user = userData ? JSON.parse(userData) : null;
     },
 
     logged() {
