@@ -18,8 +18,8 @@
                     InputText.mt-2(type="textarea" label="Job description" name="description" placeholder="Breifily descripe you job")
             .endBar
                 .col.d-flex.justify-content-end
-                    el-button(type="primary" style="height: 45px;") Cancel
-                    el-button(type="success" native-type="submit" style="height: 45px;") Post job
+                    el-button.rounded-5.px-5.py-4(type="primary") Cancel
+                    el-button.rounded-5.px-5.py-4(type="success" native-type="submit") Post job
 </template>
 
 <script setup lang="ts">
@@ -27,6 +27,7 @@ import { object, string, number } from "yup";
 import { userStore } from "@/store/auth";
 import { Roles, WorkingModes, Levels } from "@/types/types";
 
+const config = useRuntimeConfig();
 const store = userStore();
 const formSchema = object({
   title: string()
@@ -38,12 +39,15 @@ const formSchema = object({
   workingMode: string().required("Field is required").label("Working Mode"),
   price: string().required("Field is required").label("Price"),
   location: string().required("Field is required").label("Location"),
-  description: string().required("Field is required").label("Job description"),
+  description: string()
+    .required("Field is required")
+    .label("Job description")
+    .max(1000, "Description cannot exceed 1000 characters"),
 });
 
 const onSubmit = async function (values: any) {
   const { data, error } = await useAsyncData("addJob", async () => {
-    const res = $fetch("http://127.0.0.1:8000/jobs/", {
+    const res = $fetch(`${config.public.API_BASE_URL}jobs/`, {
       method: "POST",
       body: {
         user: store.user?.id,
@@ -68,10 +72,22 @@ const onSubmit = async function (values: any) {
   });
   console.log("data -->", data);
   console.log("error -->", error);
+  if (!error.value) {
+    ElMessage({
+      type: "success",
+      message: `Job "${data?.value?.id}" added successfully`,
+    });
+    navigateTo("/dashboard/jobs");
+  } else {
+    ElMessage({
+      type: "error",
+      message: "Could not add job!",
+    });
+  }
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .endBar {
   position: fixed;
   bottom: 0;

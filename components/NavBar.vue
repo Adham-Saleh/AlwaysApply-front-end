@@ -17,8 +17,8 @@
                     li.nav-item
                         NuxtLink.nav-link(to="/about") About us
                 form.d-flex.gap-2(role='search')
-                    NuxtLink.btn.btn-outline-success.py-2.px-4(to="/auth/register" v-if="store.user?.isLoggedIn" type='submit') Sign up
-                    NuxtLink.btn.btn-success.py-2.px-4(to="/auth/login" type='submit' v-if="store.user?.isLoggedIn" ) Login
+                    NuxtLink.btn.btn-outline-success.py-2.px-4(to="/auth/register" v-if="!store?.isLoggedIn" type='submit') Sign up
+                    NuxtLink.btn.btn-success.py-2.px-4(to="/auth/login" type='submit' v-if="!store?.isLoggedIn" ) Login
 
                     .user-avatar.d-flex.align-items-center(v-else)
 

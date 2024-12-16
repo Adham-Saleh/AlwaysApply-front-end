@@ -15,7 +15,7 @@
             .bg-success.rounded.text-white
                 span(style="font-size: 12px; padding: 3px;") {{data?.level}}
         .fw-light.mt-4
-            span.fw-bolder {{data?.user_details?.role}}
+            h5.fw-bolder {{data?.title}}
             p {{data?.description.slice(0, descriptionLimit)}} #[span.fw-bold load more...]
         .requirements.d-none.d-md-block
                 .col.requirements-list.d-flex.algin-items-center.gap-2

@@ -29,13 +29,16 @@ export const userStore = defineStore("userStore", {
 
     async login(values: any) {
       const { data, error } = await useAsyncData("userLogin", async () => {
-        const res = await $fetch("http://127.0.0.1:8000/api/login", {
-          method: "POST",
-          body: {
-            email: values.email,
-            password: values.password,
-          },
-        });
+        const res = await $fetch(
+          "https://adhamsaleh.pythonanywhere.com/api/login",
+          {
+            method: "POST",
+            body: {
+              email: values.email,
+              password: values.password,
+            },
+          }
+        );
         return res;
       });
       if (error.value)
@@ -55,17 +58,20 @@ export const userStore = defineStore("userStore", {
       const { data, error } = await useAsyncData(
         "userRegistration",
         async () => {
-          const res = await $fetch("http://127.0.0.1:8000/api/register", {
-            method: "POST",
-            body: {
-              image: profilePicture?.value?.url,
-              name: values.fullName,
-              email: values.email,
-              password: values.password,
-              role:
-                values.role === "Company" ? Roles.company : Roles.freelancer,
-            },
-          });
+          const res = await $fetch(
+            "https://adhamsaleh.pythonanywhere.com/api/register",
+            {
+              method: "POST",
+              body: {
+                image: profilePicture?.value?.url,
+                name: values.fullName,
+                email: values.email,
+                password: values.password,
+                role:
+                  values.role === "Company" ? Roles.company : Roles.freelancer,
+              },
+            }
+          );
           return res;
         }
       );
@@ -84,9 +90,12 @@ export const userStore = defineStore("userStore", {
 
     async logout() {
       const { data, error } = await useAsyncData("userLogout", async () => {
-        const res = await $fetch("http://127.0.0.1:8000/api/logout", {
-          method: "POST",
-        });
+        const res = await $fetch(
+          "https://adhamsaleh.pythonanywhere.com/api/logout",
+          {
+            method: "POST",
+          }
+        );
 
         return res;
       });

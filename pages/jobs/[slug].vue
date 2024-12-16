@@ -1,6 +1,5 @@
 <template lang="pug">
     .container.pt-5.pb-5
-        //- pre {{job}}
         .row
             .col-lg-9
                 h3 {{job?.title}}
@@ -23,11 +22,11 @@
                 .finance-and-level
                     .d-flex.justify-content-around
                         .price.d-block
-                            span  {{job?.price || '20' }}$
+                            span  {{job?.price || '0' }}$
                             br
                             span.text-muted(style="font-size: 12px") Fixed Price
                         .level
-                            span {{job?.level[0].toUpperCase() + job?.level.slice(1, job?.level.length)}} level
+                            span {{job?.level?.at(0)?.toUpperCase() + job?.level?.slice(1, job?.level?.length)}} level
                             br
                             span.text-muted(style="font-size: 12px") I am looking for a freelancer with the lowest rate
                 el-divider 
@@ -36,7 +35,7 @@
                         span.py-1.px-2.rounded-5.border.border-black(v-for="i in ['vue', 'nuxt', 'javascript', 'problem solving', 'Django']")  {{i}}
             .col-lg-3.mt-3.mt-lg-0
                 .row
-                    button.btn.btn-success.rounded-4 Apply Now
+                    NuxtLink.btn.btn-success.rounded-4(:to="`/jobs/apply/${job?.id}`") Apply Now
                 .row.mt-3
                     button.btn.btn-outline-success.rounded-4.algin-center
                         i.me-3(class="bi bi-heart")
@@ -54,10 +53,11 @@
 
 <script setup lang="ts">
 const route = useRoute();
+const config = useRuntimeConfig();
 const slug = route.params.slug;
 
 const { data: job, error } = useAsyncData("getJobs", async () => {
-  const res = await $fetch(`http://127.0.0.1:8000/jobs/${slug}`);
+  const res = await $fetch(`${config.public.API_BASE_URL}jobs/${slug}`);
 
   return res;
 });
