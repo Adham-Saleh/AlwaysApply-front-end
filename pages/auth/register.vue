@@ -7,7 +7,7 @@
             pre {{fullName}}
             .col
                 Form(:validationSchema="rgistrationSchema" @submit="onSubmit")
-                    InputUploadFile(:name="profileImg" :limit="1" :formats="['jpeg', 'png', 'jpg']" label="Profile picture" @uploadedImage="handleImageUpload")
+                    InputUploadFile(name="profileImg" :limit="1" :formats="['jpeg', 'png', 'jpg']" label="Profile picture" @uploadedImage="handleImageUpload")
                     InputText.mt-2(type="text" placeholder="Full name" label="Full name*" name="fullName")
                     InputText.mt-3(type="text" placeholder="Email" label="Email*" name="email")
                     InputText.mt-3.mb-3(type="password" placeholder="Password" label="Password*" name="password")

@@ -5,7 +5,7 @@
         .row.mt-5(v-if="true")
             .col-lg-3
                 h4 Filter
-                .row
+                //- .row
                     .col-lg-12
                         InputSelect.custom-style(label="Working mode" name="workingMode" :options="['Full time', 'Part time']")
                     .col-lg-12.mt-2

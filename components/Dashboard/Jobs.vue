@@ -11,8 +11,8 @@
                     //- el-avatar(:size="43")
                     .info.d-flex.flex-column
                         span 
-                         | # {{scope.row.id}}
-                        span(style="font-size: 12px;") {{scope.row.location}}
+                         | # {{scope.row?.id}}
+                        span(style="font-size: 12px;") {{scope.row?.location}}
         
         //- job title
         el-table-column(label='Job Title' width='240' show-overflow-tooltip='')
@@ -26,7 +26,7 @@
                             .statusMenu                        
                                 el-dropdown-item.w-full(v-for="role in titles.job_titles" class="font-medium  !text-[#1F1F21]"  @click="console.log('role clicked')"  :key="role") {{role}}
             template(#default='scope')
-                p.py-1.px-2.my-auto.rounded-5(style="background-color: #D8F3F5; height: 100%; width: fit-content;") {{scope.row.title}}
+                p.py-1.px-2.my-auto.rounded-5(style="background-color: #D8F3F5; height: 100%; width: fit-content;") {{scope.row?.title}}
 
         //- status
         el-table-column(property='Status' label='Status')
@@ -48,7 +48,7 @@
 
         //- created at
         el-table-column(property='Created at' label='Created at' :sortable="true" prop="CREATED")
-            template(#default='scope') {{formatDate(scope.row.createdAt)}}
+            template(#default='scope') {{formatDate(scope.row?.createdAt)}}
 
         //- action
         el-table-column(property='Created at' label='Action')
@@ -94,11 +94,11 @@ const {
   error,
 } = useFetch(`${config.public.API_BASE_URL}companies/${store?.user?.id}/jobs`);
 
-const { data: titles } = useAsyncData("getJobsTitle", async () => {
+
+const { data: titles } = await useAsyncData("getJobsTitle", async () => {
   const res = await $fetch(`${config.public.API_BASE_URL}jobs/titles/`);
   return res;
 });
-console.log(titles);
 </script>
 
 <style scoped></style>
