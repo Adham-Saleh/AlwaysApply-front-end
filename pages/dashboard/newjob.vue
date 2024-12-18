@@ -1,6 +1,6 @@
 <template lang="pug">
     .container.pt-5.pb-5
-        pre {{userStore?.user}}
+        pre {{store?.user}}
         Form(:validationSchema="formSchema" @submit="onSubmit")
             .row
                 h3 Create new job

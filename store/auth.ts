@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { useLocalStorage } from "@vueuse/core";
 import { Roles } from "@/types/types";
+import { timeSelectProps } from "element-plus";
 
 export const userStore = defineStore("userStore", {
   state: () => {
@@ -105,10 +106,23 @@ export const userStore = defineStore("userStore", {
     },
 
     async checkAuthority(code: number = 0) {
+      if (code === 600) {
+        console.log(code)
+        this.token = "";
+        this.isLoggedIn = false;
+      }
+
       const { data, error } = await useAsyncData(
         "userCheckAuthority",
         async () => {
-          const res = await $fetch("/api/user");
+          const res = await $fetch(
+            "https://adhamsaleh.pythonanywhere.com/api/user",
+            {
+              headers: {
+                Authorization: `${this.token}`,
+              },
+            }
+          );
           return res;
         }
       );

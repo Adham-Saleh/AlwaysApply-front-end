@@ -37,6 +37,13 @@ const {
 } = useField(name, undefined, {
   initialValue: props.value,
 });
+
+watch(
+  () => props.value,
+  (newValue: any) => {
+    inputValue.value = newValue;
+  }
+);
 </script>
 
 <style scoped>

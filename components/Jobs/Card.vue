@@ -1,6 +1,6 @@
 <template lang="pug">
     .time
-        span.text-muted(style="font-size: 12px;") {{data?.createdAt}}
+        span.text-muted(style="font-size: 12px;") {{timeAgo(data?.createdAt)}}
         .logo-container.d-flex.gap-2.text-muted.align-items-center
             .logo
                 img(src=`../../assets/1.png` style="max-width: 40px;")

@@ -1,11 +1,10 @@
 <template lang="pug">
-    pre {{tableData}}
-    el-table(:data='jobs' :loading="true" style='width: 100%;')
+    el-table(:data='jobs' :loading="pending" @current-change="handleRowClick" style='width: 100%;')
                 
         el-table-column(type='selection' width='55')
 
         //- Freelancer
-        el-table-column(label='Freelancer' width='250')
+        el-table-column(label='Job ID' width='250')
             template(#default='scope')
                 .d-flex.gap-2
                     //- el-avatar(:size="43")
@@ -44,7 +43,7 @@
         
         //- price
         el-table-column(property='Price' label='Price')
-            template(#default='scope') 200$
+            template(#default='scope') {{scope?.row?.price}}$
 
         //- created at
         el-table-column(property='Created at' label='Created at' :sortable="true" prop="CREATED")
@@ -54,20 +53,23 @@
         el-table-column(property='Created at' label='Action')
             template(#default="scope")
                 .d-flex.align-content-center.text-center.py-2(@click.stop)
-                    el-dropdown(class="outline-outline-0" trigger="click" v-if="!scope?.row.isDeleted")
+                    el-dropdown(class="outline-outline-0" trigger="click")
                         span(class="el-dropdown-link")
                             .toggle-icon.text-md
                                 i(class="bi bi-three-dots-vertical")
                         template(#dropdown='')
                             el-dropdown-menu
                                 el-dropdown-item
-                                    NuxtLink Preview
+                                    NuxtLink.text-decoration-none.text-black(:to="`/dashboard/jobs/${scope?.row?.id}`") Preview
                                 el-dropdown-item
-                                    NuxtLink Edit
-                                el-dropdown-item
+                                    NuxtLink.text-decoration-none.text-black(:to="`/dashboard/jobs/edit_${scope?.row?.id}`") Edit
+                                el-dropdown-item(@click="[deleteJobModel=true, currentSelectedJob = scope?.row?.id]")
                                     NuxtLink Delete
-                                el-dropdown-item
-                                    NuxtLink disable
+                                el-dropdown-item(@click="[disableJobModel=true, currentSelectedJob = scope?.row?.id, isActive=scope?.row?.isActive]")
+                                    NuxtLink {{scope?.row?.isActive ? 'Disable' : 'Enable'}}
+
+    ActionModel(v-if="deleteJobModel" @confirm="handleDelete" v-model="deleteJobModel" title="Delete Job" :description="`Are you sure you want to delete this job #${currentSelectedJob} ?`" confirmText="Delete Job")
+    ActionModel(v-if="disableJobModel" @confirm="handleDisable" v-model="disableJobModel" title="Disable Job" :description="`Are you sure you want to disable this job #${currentSelectedJob} ?`" confirmText="Disable Job")
 </template>
 
 <script setup lang="ts">
@@ -76,29 +78,63 @@ import { userStore } from "@/store/auth";
 const store = userStore();
 const config = useRuntimeConfig();
 const loading = ref<boolean>(false);
-
-// const { data: jobs, error } = useAsyncData(
-//   "getCompanyJobs",
-//   async () => {
-//     const res = await $fetch(
-//       `${config.public.API_BASE_URL}companies/${store?.user?.id}/jobs`
-//     );
-//     return res;
-//   },
-//   { immediate: true }
-// );
+const deleteJobModel = ref<boolean>(false);
+const disableJobModel = ref<boolean>(false);
+const currentSelectedJob = ref<number>();
+const isActive = ref<boolean>();
 
 const {
   data: jobs,
-  pending,
   error,
-} = useFetch(`${config.public.API_BASE_URL}companies/${store?.user?.id}/jobs`);
+  refresh,
+} = useAsyncData(
+  "getSingleCompanyJobs",
+  async () => {
+    const res = await $fetch(
+      `${config.public.API_BASE_URL}companies/${store?.user?.id}/jobs`
+    );
+    return res;
+  },
+  { watch: store }
+);
 
-
-const { data: titles } = await useAsyncData("getJobsTitle", async () => {
+const { data: titles } = useAsyncData("getJobsTitle", async () => {
   const res = await $fetch(`${config.public.API_BASE_URL}jobs/titles/`);
   return res;
 });
+
+const handleRowClick = function (job: any) {
+  navigateTo(`/dashboard/jobs/${job.id}`);
+};
+
+const handleDelete = async function () {
+  const { data } = await useAsyncData("deleteJob", async () => {
+    const res = await $fetch(
+      `${config.public.API_BASE_URL}jobs/${currentSelectedJob.value}/`,
+      { method: "DELETE" }
+    );
+    return res;
+  });
+  await refresh();
+  console.log("deleted data -->", data);
+};
+
+const handleDisable = async function () {
+  const { data } = await useAsyncData("disableJob", async () => {
+    const res = await $fetch(
+      `${config.public.API_BASE_URL}jobs/${currentSelectedJob.value}/`,
+      {
+        method: "PUT",
+        body: {
+          isActive: !isActive.value,
+        },
+      }
+    );
+    return res;
+  });
+  await refresh();
+  console.log("disabled data -->", data);
+};
 </script>
 
 <style scoped></style>

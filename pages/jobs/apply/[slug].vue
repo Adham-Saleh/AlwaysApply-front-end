@@ -6,9 +6,9 @@
                 .job-info
                     //- pre {{job}}
                     h3 You are applying to #[span.text-muted {{slug}} ]
-                    span Front-end role at Google inc
+                    span {{job?.title}} role at {{job?.user_details?.name}}
                 .job-action
-                    el-button.px-5.py-4.rounded-5.d-none.d-md-flex Job details 
+                    el-button.px-5.py-4.rounded-5.d-none.d-md-flex(@click="navigateTo(`/jobs/${job?.id}`)") Job details 
 
         .row.justify-content-center.rounded-4.p-4.border.mt-3
             Form(:validationSchema="applyForm" @submit="onSubmit") 
@@ -47,6 +47,7 @@ const applyForm = object({
     .required("Fiend is required")
     .max(1000, "Proposal cannot exceed 1000 charachter")
     .label("Proposal"),
+  dueTo: string().required("Field is required").label("Due to"),
 });
 
 const { data: job, error } = useAsyncData("getJobs", async () => {
@@ -58,20 +59,29 @@ const { data: job, error } = useAsyncData("getJobs", async () => {
 const onSubmit = async function (values: any) {
   loading.value = true;
   const { data, error } = await useAsyncData("apply", async () => {
-    const res = await $fetch(`${config.public.API_BASE_URL}apply`, {
+    const res = await $fetch(`${config.public.API_BASE_URL}apply/`, {
       method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: {
-        job: job?.id,
+        job: job.value?.id,
         freelancer: store?.user?.id,
-        company: job?.user_details?.id,
+        company: job.value?.user_details?.id,
         proposal: values.proposal,
         price: values.amount,
-        duration: values.duration,
-        status: "PENDING",
+        duration: 3,
+        status: "pending",
+        due_to: values.dueTo,
       },
     });
   });
+  console.log("application -->", error);
   loading.value = false;
+  if (error.value)
+    return ElMessage({ type: "error", message: "Error encountered" });
+  ElMessage({
+    type: "success",
+    message: `Cogrates! You have applied to job "${data.value?.job}" successfully`,
+  });
 };
 </script>
 

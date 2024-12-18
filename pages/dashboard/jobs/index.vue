@@ -1,9 +1,8 @@
 <template lang="pug">
     .container-fluid.pt-5.pb-5
         .row
-            pre {{userStore?.user}}
             .col-lg-2
-                el-menu.el-menu-vertical-demo(default-active='2' :collapse='isCollapse' @open='handleOpen' @close='handleClose')
+                el-menu.el-menu-vertical-demo(default-active='2' @open='handleOpen' @close='handleClose')
                     el-menu-item(index='1')
                         template(#title='')
                             i.me-2(class="bi bi-award-fill")
