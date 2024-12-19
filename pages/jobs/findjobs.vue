@@ -3,15 +3,15 @@
         h3 Job  Search
         p.text-muted Search for your desired job matching your skills
         .row.mt-5
-            .col-lg-3
-                h4 Filter
+            //- .col-lg-3
+            //-     h4 Filter
                 //- .row
                     .col-lg-12
                         InputSelect.custom-style(label="Working mode" name="workingMode" :options="['Full time', 'Part time']")
                     .col-lg-12.mt-2
                         InputSelect.custom-style(label="Level" name="level" :options="['Entry', 'Intermediate', 'Advanced']")
                 el-divider
-            .col-lg-9
+            .col-lg
                 h4 All Jobs ({{jobs?.results?.totalCount}})
                 .row.p-3
                     input.form-control.rounded-5.p-3(placeholder="Search for jobs" v-model="search")
@@ -27,6 +27,10 @@
 </template>
 
 <script lang="ts" setup>
+useHead({
+  title: "AlwayApply | Find jobs",
+});
+
 const loading = ref<boolean>(false);
 const config = useRuntimeConfig();
 const limit = ref<number>(3);

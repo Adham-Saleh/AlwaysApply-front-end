@@ -30,6 +30,10 @@
 import { object, string, number } from "yup";
 import { userStore } from "@/store/auth";
 
+useHead({
+  title: `AlwayApply | Login`,
+});
+
 const currentUserStore = userStore();
 const email = ref<string>("");
 const password = ref<string>("");

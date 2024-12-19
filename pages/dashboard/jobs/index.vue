@@ -24,6 +24,10 @@
 import type { TabsPaneContext } from "element-plus";
 import { userStore } from "@/store/auth";
 
+useHead({
+  title: "AlwayApply | Company dashboard",
+});
+
 const activeName = ref("jobs");
 const store = userStore();
 const menuItems = [

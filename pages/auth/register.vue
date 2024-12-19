@@ -20,6 +20,10 @@
 import { object, string, number } from "yup";
 import { userStore } from "@/store/auth";
 
+useHead({
+  title: `AlwayApply | Register`,
+});
+
 const currentUserStore = userStore();
 console.log(currentUserStore);
 const specialChar = /[!@#$%^&*(),.?":{}|<>]/;

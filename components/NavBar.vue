@@ -57,7 +57,7 @@ const store = userStore();
 const profileMenu = computed(() => [
   {
     name: "Profile",
-    link: `/user/${store?.user?.id || ""}`, // Use fallback in case `id` is not yet available
+    link: `/user/`,
     icon: "bi bi-person-circle",
     isVisable: true,
   },
@@ -72,6 +72,7 @@ const profileMenu = computed(() => [
 const handleUserLogout = async function () {
   const { message, success } = await store.logout();
   if (success) await store.checkAuthority(600);
+  navigateTo("/");
 };
 </script>
 

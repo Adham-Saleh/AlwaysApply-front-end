@@ -65,7 +65,7 @@ export const userStore = defineStore("userStore", {
             {
               method: "POST",
               body: {
-                image: profilePicture,
+                // image: profilePicture,
                 name: values.fullName,
                 email: values.email,
                 password: values.password,
@@ -107,7 +107,7 @@ export const userStore = defineStore("userStore", {
 
     async checkAuthority(code: number = 0) {
       if (code === 600) {
-        console.log(code)
+        console.log(code);
         this.token = "";
         this.isLoggedIn = false;
       }

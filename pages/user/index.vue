@@ -26,8 +26,10 @@
 import { userStore } from "@/store/auth";
 
 const store = userStore();
-const route = useRoute();
-const slug = route.params.slug;
+
+useHead({
+  title: `AlwayApply | Profile page`,
+});
 </script>
 
 <style lang="scss" scoped>

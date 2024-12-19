@@ -30,6 +30,10 @@
 </template>
 
 <script setup>
+useHead({
+  title: "AlwayApply | Apply and manage jobs safetly",
+});
+
 const initial = ref({
   y: 100,
   opacity: 0,
