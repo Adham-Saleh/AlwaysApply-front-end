@@ -1,6 +1,6 @@
 <template lang="pug">
     .container.d-flex.justify-content-center.pt-5.pb-5
-        .row.border.rounded-5.p-3.w-50
+        .row.border.rounded-5.p-3
             .col
                 .action.d-flex.justify-content-end
                     NuxtLink.text-decoration-none.text-black(:to="`/dashboard/jobs/edit_${slug}`") 
@@ -11,7 +11,7 @@
                         p.fw-bold {{job?.title}}
                     .job-description
                         p.m-0 Job Description
-                        p.fw-bold {{job?.description}}
+                        p.fw-bold {{job?.description.slice(0, 50)}}..
                     .job-created-at
                         p.m-0 Created At
                         p.fw-bold {{formatDate(job?.createdAt)}}

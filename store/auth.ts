@@ -65,7 +65,7 @@ export const userStore = defineStore("userStore", {
             {
               method: "POST",
               body: {
-                image: profilePicture?.value?.url,
+                image: profilePicture,
                 name: values.fullName,
                 email: values.email,
                 password: values.password,

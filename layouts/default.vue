@@ -17,11 +17,9 @@ const authToken = useCookie("token:auth").value;
 const checkUserAuthority = async function () {
   const res = await store.checkAuthority(0);
   if (res.value?.success) {
-    if (process.client) {
-      console.log("I am in client side");
-      store.setData(res.value?.user, authToken);
-      store.logged();
-    }
+    console.log("I am in client side");
+    store.setData(res.value?.user, authToken);
+    store.logged();
   } else {
     console.log("I am setting data to null");
     store.setData(null, "");

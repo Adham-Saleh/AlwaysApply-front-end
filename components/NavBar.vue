@@ -30,7 +30,7 @@
                                             .d-flex.algin-content-center.justify-content-center.gap-1
                                                 span {{store?.user.email}}
                                     el-dropdown-item(v-for="item in profileMenu")
-                                        NuxtLink(:to="item.link")
+                                        NuxtLink.text-decoration-none.text-black(:to="item.link")
                                             .d-flex.algin-content-center.justify-content-center.gap-1
                                                 h5
                                                     i(:class="item.icon")
@@ -59,11 +59,13 @@ const profileMenu = computed(() => [
     name: "Profile",
     link: `/user/${store?.user?.id || ""}`, // Use fallback in case `id` is not yet available
     icon: "bi bi-person-circle",
+    isVisable: true,
   },
   {
     name: "Proposals",
     link: `/user/proposals`,
     icon: "bi bi-receipt",
+    isVisable: store?.user?.role === "freelancer",
   },
 ]);
 

@@ -1,6 +1,5 @@
 <template lang="pug">
     .container.pt-5.pb-5
-        pre {{store?.user}}
         Form(:validationSchema="formSchema" @submit="onSubmit")
             .row
                 h3 Create new job
@@ -19,7 +18,7 @@
                     InputText.mt-2(type="textarea" label="Job description" name="description" placeholder="Breifily descripe you job")
             .endBar
                 .col.d-flex.justify-content-end
-                    el-button.rounded-5.px-5.py-4(type="primary") Cancel
+                    el-button.rounded-5.px-5.py-4(type="primary" @click="navigateTo('/dashboard/jobs')") Cancel
                     el-button.rounded-5.px-5.py-4(type="success" native-type="submit") Post job
 </template>
 

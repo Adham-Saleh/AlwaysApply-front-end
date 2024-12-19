@@ -23,7 +23,7 @@
                   p.text-center.fw-bold.my-5 No jobs available for search input "{{search}}"
                 .row.justify-content-center.mt-5
                     el-button.btn.btn-success.rounded-5.w-25.py-4.px-3(@click="handleLoadMore" v-if="jobs?.next") Load more
-                    el-button.btn.btn-success.rounded-5.w-25.py-4.px-3(@click="handleShowLess" v-else-if="jobs?.length > 3") Show less
+                    el-button.btn.btn-success.rounded-5.w-25.py-4.px-3(@click="handleShowLess" v-else-if="jobs?.results?.jobs?.length > 3") Show less
 </template>
 
 <script lang="ts" setup>

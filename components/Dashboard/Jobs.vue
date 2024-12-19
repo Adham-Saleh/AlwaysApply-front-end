@@ -1,5 +1,5 @@
 <template lang="pug">
-    el-table(:data='jobs' :loading="pending" @current-change="handleRowClick" style='width: 100%;')
+    el-table(:data='jobs?.results?.jobs' :loading="pending" @current-change="handleRowClick" style='width: 100%;')
                 
         el-table-column(type='selection' width='55')
 
@@ -23,7 +23,7 @@
                             i(class="bi bi-arrow-down-short")
                         template(#dropdown)
                             .statusMenu                        
-                                el-dropdown-item.w-full(v-for="role in titles.job_titles" class="font-medium  !text-[#1F1F21]"  @click="console.log('role clicked')"  :key="role") {{role}}
+                                el-dropdown-item.w-full(v-for="title in ['All', ...titles.job_titles]" class="font-medium  !text-[#1F1F21]"  @click="handleTitleChange(title)"  :key="title") {{title}}
             template(#default='scope')
                 p.py-1.px-2.my-auto.rounded-5(style="background-color: #D8F3F5; height: 100%; width: fit-content;") {{scope.row?.title}}
 
@@ -60,14 +60,16 @@
                         template(#dropdown='')
                             el-dropdown-menu
                                 el-dropdown-item
-                                    NuxtLink.text-decoration-none.text-black(:to="`/dashboard/jobs/${scope?.row?.id}`") Preview
+                                    NuxtLink.text-decoration-none.text-muted(:to="`/dashboard/jobs/${scope?.row?.id}`") Preview
                                 el-dropdown-item
-                                    NuxtLink.text-decoration-none.text-black(:to="`/dashboard/jobs/edit_${scope?.row?.id}`") Edit
+                                    NuxtLink.text-decoration-none.text-muted(:to="`/dashboard/jobs/edit_${scope?.row?.id}`") Edit
                                 el-dropdown-item(@click="[deleteJobModel=true, currentSelectedJob = scope?.row?.id]")
                                     NuxtLink Delete
                                 el-dropdown-item(@click="[disableJobModel=true, currentSelectedJob = scope?.row?.id, isActive=scope?.row?.isActive]")
                                     NuxtLink {{scope?.row?.isActive ? 'Disable' : 'Enable'}}
-
+    
+    el-pagination.mt-2(layout="prev, pager, next" v-model:current-change="page" @current-change="handlePageChange" :page-size="7" :total="jobs?.count")
+    
     ActionModel(v-if="deleteJobModel" @confirm="handleDelete" v-model="deleteJobModel" title="Delete Job" :description="`Are you sure you want to delete this job #${currentSelectedJob} ?`" confirmText="Delete Job")
     ActionModel(v-if="disableJobModel" @confirm="handleDisable" v-model="disableJobModel" title="Disable Job" :description="`Are you sure you want to disable this job #${currentSelectedJob} ?`" confirmText="Disable Job")
 </template>
@@ -82,6 +84,8 @@ const deleteJobModel = ref<boolean>(false);
 const disableJobModel = ref<boolean>(false);
 const currentSelectedJob = ref<number>();
 const isActive = ref<boolean>();
+const page = ref<number>(1);
+const role = ref<string>();
 
 const {
   data: jobs,
@@ -91,11 +95,13 @@ const {
   "getSingleCompanyJobs",
   async () => {
     const res = await $fetch(
-      `${config.public.API_BASE_URL}companies/${store?.user?.id}/jobs`
+      `${config.public.API_BASE_URL}companies/${
+        store?.user?.id
+      }/jobs/?size=7&page=${page.value}&title=${role.value ? role.value : ""}`
     );
     return res;
   },
-  { watch: store }
+  { watch: [store, page, role] }
 );
 
 const { data: titles } = useAsyncData("getJobsTitle", async () => {
@@ -134,6 +140,18 @@ const handleDisable = async function () {
   });
   await refresh();
   console.log("disabled data -->", data);
+};
+
+const handlePageChange = function (pageNumber: number) {
+  page.value = pageNumber;
+};
+
+const handleTitleChange = function (selectedRole: string) {
+  if (selectedRole === "All") {
+    role.value = "";
+    return;
+  }
+  role.value = selectedRole;
 };
 </script>
 

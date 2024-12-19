@@ -8,7 +8,7 @@
                 Form(:validationSchema="loginValidationSchema" @submit="onSubmit")
                     InputText(type="text" placeholder="Email" label="Email" name="email" v-model="email")
                     InputText.mt-3(type="password" placeholder="Password" label="Password" name="password" v-model="password")
-                    .forget-password.d-flex.justify-content-between
+                    //- .forget-password.d-flex.justify-content-between
                         el-checkbox(v-model="checked1" label="Remember me" size="small")
                         NuxtLink.my-auto(to="/" style="font-size: 12px;") Forget password?
                     el-button.w-100.mt-3.mb-3(native-type="submit" :loading="loading" style=" height: 56px;" type="success") Login

@@ -12,9 +12,9 @@
                   .content
                     h3 Dashboard
                     p.text-muted Manage you business fastly and safely
-                  el-button.me-5.d-flex.align-content-center.py-4.px-4.rounded-5
+                  el-button.me-5.d-flex.align-content-center.py-4.px-4.rounded-5(@click="navigateTo('/dashboard/newjob')")
                     i.me-1(class="bi bi-plus-lg") 
-                    span(@click="navigateTo('/dashboard/newjob')") Add job
+                    span Add job
                 el-tabs.demo-tabs(v-model='activeName' @tab-click='handleClick')
                     el-tab-pane(label='Job offers' name='jobs'): dashboardJobs
                     el-tab-pane(label='Proposals' name='proposals'): dashboardProposals
@@ -34,13 +34,13 @@ const menuItems = [
   },
 ];
 
-onMounted(() => {
-  ElNotification({
-    title: "Welcome!",
-    message: `Welcome Mr ${store.user?.name}, here is your dashboard to manage you business`,
-    position: "bottom-right",
-  });
-});
+// onMounted(() => {
+//   ElNotification({
+//     title: "Welcome!",
+//     message: `Welcome Mr ${store.user?.name}, here is your dashboard to manage you business`,
+//     position: "bottom-right",
+//   });
+// });
 
 const handleClick = (tab: TabsPaneContext, event: Event) => {
   activeName.value = tab;

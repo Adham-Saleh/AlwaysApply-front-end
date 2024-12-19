@@ -73,7 +73,8 @@ const onSubmit = async function (values: any) {
 };
 
 const handleImageUpload = function (file: any) {
-  profilePicture.value = file;
+  console.log(file.raw);
+  profilePicture.value = file.raw;
 };
 </script>
 

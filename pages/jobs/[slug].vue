@@ -4,7 +4,7 @@
             .col-lg-9
                 h3 {{job?.title}}
                 .d-flex.gap-5.mt-4
-                    span.text-muted {{job?.createdAt}} 
+                    span.text-muted {{timeAgo(job?.createdAt)}} 
                     .location.algin-items-center.gap-3.text-muted
                         i(class="bi bi-geo-alt")
                         span {{job?.location}}
