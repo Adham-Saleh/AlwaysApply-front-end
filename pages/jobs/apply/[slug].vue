@@ -5,8 +5,8 @@
             .job.d-flex.justify-content-between.align-items-center
                 .job-info
                     //- pre {{job}}
-                    h3 You are applying to #[span.text-muted {{slug}} ]
-                    span {{job?.title}} role at {{job?.user_details?.name}}
+                    h3 You are applying to #[span.text-muted {{job?.title}} role ]
+                    span  at {{job?.user_details?.name}}
                 .job-action
                     el-button.px-5.py-4.rounded-5.d-none.d-md-flex(@click="navigateTo(`/jobs/${job?.id}`)") Job details 
 

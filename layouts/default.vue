@@ -13,13 +13,14 @@ const store = userStore();
 console.log("store -->", store);
 
 const checkUserAuthority = async function () {
+  await nextTick();
   const res = await store.checkAuthority(0);
   console.log(res);
-  console.log(res.value);
-  console.log(res.value?.user);
-  console.log(res.value?.token);
-  console.log(res.value?.success);
-  if (res.value?.success) {
+  console.log(res?.value);
+  console.log(res?.value?.user);
+  console.log(res?.value?.token);
+  console.log(res?.value?.success);
+  if (res?.value?.success) {
     console.log("I am in client side");
     store.setData(res.value?.user, res.value?.token);
     store.logged();

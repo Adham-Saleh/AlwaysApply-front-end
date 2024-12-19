@@ -126,6 +126,7 @@ export const userStore = defineStore("userStore", {
           return res;
         }
       );
+      console.log("from auth store -->", data, error);
       return data;
     },
   },

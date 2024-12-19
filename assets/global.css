@@ -12,7 +12,7 @@ body {
 
 .btn-outline-success {
   border-color: #6300b3 !important;
-  color: #6300b3;
+  color: #6300b3 !important;
 }
 
 .el-button--success {
