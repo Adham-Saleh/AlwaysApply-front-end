@@ -1,17 +1,17 @@
 <template lang="pug">
     .container.pt-5.pb-5
-        //- pre {{application}}
         .row
             .col-lg-12
                 .status.p-4.rounded-5.border.d-flex.justify-content-between.align-items-center
                     .track
                         h3 Trace status
                         p.text-muted Freelancer is currently working on the project
-                        p.py-1.px-2.my-auto.rounded-5(style="background-color: #D8F3F5; width: fit-content;") In progress...
+                        p.py-1.px-2.my-auto.rounded-5(style="background-color: #D8F3F5; width: fit-content;") {{application?.status === 'completed' ? application?.status : "In progress..."}}
                         //- el-timeline.mt-5(style="max-width: 600px")
                         //-     el-timeline-item(v-for="(activity, index) in activities" :key="index" :timestamp="activity.timestamp") {{activity.content}}
                     .actions
-                        el-button.px-3.py-4.rounded-5(type="success") Finalize Project
+                        el-button.px-3.py-4.rounded-5(type="success" @click="handleCompleteStatus" :loading="loading" v-if="store?.user?.role === 'freelancer' && application?.status ==='accepted'") Finalize Project
+                        el-button.px-3.py-4.rounded-5(@click="[reviewModel = true]" v-if="application?.status ==='completed'") {{store?.user?.role === 'company' ? `Review freelancer` : `Review Company`}}
             .col-lg-6.mt-3
                 .freelancer-details.rounded-5.p-4.border
                     h3 Freelancer details
@@ -23,6 +23,8 @@
                                 p.text-muted.fw-bold # {{application?.freelancer_details?.id}}
                     .rating.mt-2
                         p.m-0 Freelancer rating
+                        i(class="bi bi-star-fill" style="color: orange;" v-if="application?.freelancer_details?.rating").me-1
+                        i(class="bi bi-star" style="outline: orange;" v-if="!application?.freelancer_details?.rating").me-1
                         span.fw-bold {{application?.freelancer_details?.rating ? application?.freelancer_details?.rating : 'No ratings yet'}}
                     .email.mt-2
                         p.m-0 Freelancer email
@@ -38,6 +40,8 @@
                                 p.text-muted.fw-bold # {{application?.company_details?.id}} 
                     .rating.mt-2
                         p.m-0 Freelancer rating
+                        i(class="bi bi-star-fill" style="color: orange;" v-if="application?.freelancer_details?.rating").me-1
+                        i(class="bi bi-star" style="outline: orange;" v-if="!application?.freelancer_details?.rating").me-1
                         span.fw-bold {{application?.company_details?.rating ? application?.company_details?.rating : 'No ratings yet'}}
                     .email.mt-2
                         p.m-0 Freelancer email
@@ -84,37 +88,76 @@
                     .price.mt-2
                         p.m-0
                         span {{application?.job_details?.price}}$
+
+
+        ActionModel(v-if="reviewModel" type="review" @confirm="handleReview" v-model="reviewModel" title="Add review" description="Reviews are very important and affects both of your and others reputation in the market, please be careful and fare" confirmText="Add review")
+    
 </template>
 
 <script setup lang="ts">
-const activities = [
-  {
-    content: "Event start",
-    timestamp: "2018-04-15",
-  },
-  {
-    content: "Approved",
-    timestamp: "2018-04-13",
-  },
-  {
-    content: "Success",
-    timestamp: "2018-04-11",
-  },
-];
+import { userStore } from "@/store/auth";
 
+const store = userStore();
 const config = useRuntimeConfig();
 const route = useRoute();
 const slug = route.params.slug;
+const loading = ref<boolean>(false);
+const reviewModel = ref<boolean>(false);
 
-const { data: application, error } = useAsyncData(
-  "getApplication",
-  async () => {
+const {
+  data: application,
+  error,
+  refresh,
+} = useAsyncData("getApplication", async () => {
+  const res = await $fetch(`${config.public.API_BASE_URL}appllication/${slug}`);
+  return res;
+});
+
+const handleCompleteStatus = async function () {
+  loading.value = true;
+  const { data, error } = await useAsyncData("changeOfferStatus", async () => {
     const res = await $fetch(
-      `${config.public.API_BASE_URL}appllication/${slug}`
+      `${config.public.API_BASE_URL}appllication/${slug}/`,
+      {
+        method: "PUT",
+        body: {
+          status: "completed",
+        },
+      }
+    );
+    await refresh();
+    return res;
+  });
+  loading.value = false;
+};
+
+const handleReview = async function (review: string) {
+  const { data: userdata } = await useAsyncData("review", async () => {
+    const res = await $fetch(
+      `${config.public.API_BASE_URL}api/userList/${
+        store?.user?.role === "company"
+          ? application?.value?.freelancer_details?.id
+          : application?.value?.company_details?.id
+      }/`
     );
     return res;
-  }
-);
+  });
+
+  const { data, error } = await useAsyncData("review", async () => {
+    const res = await $fetch(
+      `${config.public.API_BASE_URL}api/userList/${
+        store?.user?.role === "company"
+          ? application?.value?.freelancer_details?.id
+          : application?.value?.company_details?.id
+      }/`,
+      {
+        method: "PUT",
+        body: { reviews: [review, ...userdata?.value?.user?.reviews] },
+      }
+    );
+    return res;
+  });
+};
 </script>
 
 <style scoped></style>

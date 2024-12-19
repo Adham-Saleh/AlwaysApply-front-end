@@ -3,6 +3,11 @@
         template(#header='')
           span.fw-bold {{title}}
         span {{description}}
+
+        .div(v-if="type==='review'")
+          el-rate(v-model="rating" :colors="colors" size="large")
+          input.form-control(type="text" v-model="review" style="height: 56px;" placeholder="Write review" name="review")
+
         template(#footer='')
             .dialog-footer
                 el-button.rounded-5(@click='[dialog = false]') {{cancelText}}
@@ -31,11 +36,19 @@ const props = defineProps({
     required: false,
     default: "Cancel",
   },
+  type: {
+    type: String,
+    required: false,
+  },
 });
+
+const rating = ref();
+const colors = ref(["#99A9BF", "#F7BA2A", "#FF9900"]);
+const review = ref();
 
 const emit = defineEmits(["confirm"]);
 const confirm = function () {
-  emit("confirm");
+  props.type === "review" ? emit("confirm", review.value) : emit("confirm");
 };
 </script>
 

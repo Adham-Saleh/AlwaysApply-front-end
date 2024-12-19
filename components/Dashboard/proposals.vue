@@ -43,7 +43,7 @@
         el-table-column(property='Created at' label='Action')
             template(#default="scope")
                 .d-flex.align-content-center.text-center.py-2(@click.stop)
-                    el-dropdown(class="outline-outline-0" trigger="click" v-if="!scope?.row.isDeleted")
+                    el-dropdown(class="outline-outline-0" trigger="click"  v-if="!(scope?.row?.status === 'rejected')")
                         span(class="el-dropdown-link")
                             .toggle-icon.text-md
                                 i(class="bi bi-three-dots-vertical")
@@ -51,9 +51,9 @@
                             el-dropdown-menu
                                 el-dropdown-item(@click="navigateTo(`/workplace/${scope?.row?.id}`)" v-if="scope?.row?.status === 'accepted'")
                                     NuxtLink Preview
-                                el-dropdown-item(@click="[acceptModel = true, currentSelectedApplicationId=scope?.row?.id, proposal=scope?.row]")
+                                el-dropdown-item(@click="[acceptModel = true, currentSelectedApplicationId=scope?.row?.id, proposal=scope?.row]" v-if="scope?.row?.status === 'pending'")
                                     NuxtLink Accept
-                                el-dropdown-item(@click="[rejectModel = true, currentSelectedApplicationId=scope?.row?.id]")
+                                el-dropdown-item(@click="[rejectModel = true, currentSelectedApplicationId=scope?.row?.id]" v-if="scope?.row?.status === 'pending'")
                                     NuxtLink.text-danger.text-decoration-none Reject
     
     el-pagination.mt-2(layout="prev, pager, next" v-model:current-change="page" @current-change="handlePageChange" :page-size="7" :total="proposals?.count")
@@ -81,7 +81,11 @@ const { data: titles } = useAsyncData("getJobsTitle", async () => {
   return res;
 });
 
-const { data: proposals, error } = useAsyncData(
+const {
+  data: proposals,
+  error,
+  refresh,
+} = useAsyncData(
   "GetProposals",
   async () => {
     const res = await $fetch(
@@ -98,12 +102,20 @@ const { data: proposals, error } = useAsyncData(
 console.log("user proposals -->", proposals, error);
 
 const handleStatus = async function (statusCode: number) {
-  console.log(proposal)
+  console.log(proposal);
   const { data, error } = await useAsyncData("changeOfferStatus", async () => {
     const res = await $fetch(
       `${config.public.API_BASE_URL}appllication/${currentSelectedApplicationId.value}/`,
-      { method: "PUT", body: { pending: statusCode ? "accepted" : "rejected" } }
+      {
+        method: "PUT",
+        body: {
+          status: statusCode ? "accepted" : "rejected",
+          due_to: "2024-11-2",
+        },
+      }
     );
+    await refresh();
+    console.log("updated data -->", data, error);
     return res;
   });
 };

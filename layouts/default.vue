@@ -12,13 +12,11 @@ import { userStore } from "@/store/auth";
 const store = userStore();
 console.log("store -->", store);
 
-const authToken = useCookie("token:auth").value;
-
 const checkUserAuthority = async function () {
   const res = await store.checkAuthority(0);
   if (res.value?.success) {
     console.log("I am in client side");
-    store.setData(res.value?.user, authToken);
+    store.setData(res.value?.user, res.value?.token);
     store.logged();
   } else {
     console.log("I am setting data to null");

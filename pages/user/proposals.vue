@@ -38,13 +38,13 @@
                     el-table-column(property='Created at' label='Action')
                         template(#default="scope")
                             .d-flex.align-content-center.text-center.py-2(@click.stop)
-                                el-dropdown(class="outline-outline-0" trigger="click" v-if="!scope?.row.isDeleted")
+                                el-dropdown(class="outline-outline-0" trigger="click" v-if="scope?.row?.status === 'accepted'")
                                     span(class="el-dropdown-link")
                                         .toggle-icon.text-md
                                             i(class="bi bi-three-dots-vertical")
                                     template(#dropdown='')
                                         el-dropdown-menu
-                                            el-dropdown-item(@click="navigateTo(`/workplace/${scope?.row?.id}`)" v-if="scope?.row?.status === 'accepted'")
+                                            el-dropdown-item(@click="navigateTo(`/workplace/${scope?.row?.id}`)" )
                                                 NuxtLink Preview
 
         el-pagination.mt-2(layout="prev, pager, next" v-model:current-change="page" @current-change="handlePageChange" :page-size="7" :total="proposals?.count")
